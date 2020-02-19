@@ -281,7 +281,7 @@ class _ClienteScreenState extends State<ClienteScreen> {
           TextField(
             decoration: InputDecoration(
               contentPadding: EdgeInsets.all(15.0),
-              hintText: "Procurar em todos os cliente...",
+              hintText: "Pesquisar em todos os Cliente...",
             ),
             onChanged: (string) {
               isLoading = true;
