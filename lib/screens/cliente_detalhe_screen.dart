@@ -314,14 +314,14 @@ class _ClienteDetalheScreenState extends State<ClienteDetalheScreen>
                                 return Card(
                                   elevation: 4.0,
                                   margin: new EdgeInsets.symmetric(
-                                      horizontal: 2.0, vertical: 6.0),
+                                      horizontal: 2.0, vertical: 5.0),
                                   child: Container(
                                     decoration:
                                         BoxDecoration(color: Color(0xFFE8E8E8)),
                                     child: Column(
                                       children: <Widget>[
                                         Padding(
-                                          padding: const EdgeInsets.all(5.0),
+                                          padding: const EdgeInsets.all(8.0),
                                           child: Row(
                                             mainAxisAlignment:
                                                 MainAxisAlignment.spaceBetween,

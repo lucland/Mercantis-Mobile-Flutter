@@ -128,16 +128,22 @@ class _CompraDetalheScreenState extends State<CompraDetalheScreen>
         ),
         elevation: 5.0,
         backgroundColor: kBranco,
-        title: Column(
+        title: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: <Widget>[
             Text(
-              'COMPRADOR: $comprador',
+              'Comprador: $comprador',
               overflow: TextOverflow.ellipsis,
               style: TextStyle(
                 fontSize: 18.0,
                 color: kVermelhoBase,
                 fontFamily: 'Oswald',
               ),
+            ),
+            Image(
+              image: AssetImage('images/mercantis.png'),
+              height: 36,
+              width: 36.0,
             ),
           ],
         ),
@@ -175,7 +181,7 @@ class _CompraDetalheScreenState extends State<CompraDetalheScreen>
       bottomNavigationBar: Material(
         elevation: 5.0,
         borderRadius: BorderRadius.circular(0.0),
-        color: kVermelhoBase,
+        color: Colors.green,
         child: MaterialButton(
           height: 20,
           minWidth: MediaQuery.of(context).size.width,
@@ -186,17 +192,9 @@ class _CompraDetalheScreenState extends State<CompraDetalheScreen>
             children: <Widget>[
               Text("Autorizar Compra",
                   textAlign: TextAlign.center,
-                  style: TextStyle(fontFamily: 'Oswald', fontSize: 25.0)
+                  style: TextStyle(fontFamily: 'Oswald', fontSize: 23.0)
                       .copyWith(
                           color: Colors.white, fontWeight: FontWeight.w400)),
-              SizedBox(
-                width: 5,
-              ),
-              Image(
-                image: AssetImage('images/mercantis.png'),
-                height: 35.0,
-                width: 35.0,
-              ),
             ],
           ),
         ),
