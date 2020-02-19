@@ -119,13 +119,13 @@ class _HomeScreenState extends State<HomeScreen> {
               decoration: BoxDecoration(
                   boxShadow: [
                     BoxShadow(
-                      color: Color(0xFF6E6E6E),
+                      color: Color(0xFF252525),
                       blurRadius: 8.0, // has the effect of softening the shadow
                       spreadRadius:
                           0.00, // has the effect of extending the shadow
                       offset: Offset(
                         0.0, // horizontal, move right 10
-                        -3.0, // vertical, move down 10
+                        -1.0, // vertical, move down 10
                       ),
                     )
                   ],
