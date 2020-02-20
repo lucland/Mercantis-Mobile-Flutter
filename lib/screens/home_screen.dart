@@ -118,7 +118,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   boxShadow: [
                     BoxShadow(
                       color: Color(0xFF252525),
-                      blurRadius: 8.0, // has the effect of softening the shadow
+                      blurRadius: 4.0, // has the effect of softening the shadow
                       spreadRadius:
                           0.00, // has the effect of extending the shadow
                       offset: Offset(
@@ -127,7 +127,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       ),
                     )
                   ],
-                  color: kCinzaBrancoBackground,
+                  color: Color(0xFFD7DEE0),
                   borderRadius: BorderRadius.only(
                       topLeft: Radius.circular(30.0),
                       topRight: Radius.circular(30.0))),
@@ -234,9 +234,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         children: <Widget>[
                           Expanded(
                             child: GestureDetector(
-                              onTap: () {
-                                Navigator.pushNamed(context, '/dashboard');
-                              },
+                              onTap: () {},
                               child: ReusableCard(
                                 colour1: kVermelhoBase,
                                 colour2: kVermelhoBase,
@@ -286,6 +284,11 @@ class _HomeScreenState extends State<HomeScreen> {
                         ],
                       ),
                     ),
+                    Text(
+                      "Desenvolvido por ©TanisTecnologia",
+                      textAlign: TextAlign.center,
+                      style: TextStyle(color: kCinzaSubtitulo, fontSize: 15),
+                    )
                   ],
                 ),
               ),
@@ -297,6 +300,34 @@ class _HomeScreenState extends State<HomeScreen> {
         child: Column(
           children: <Widget>[
             Expanded(
+              flex: 30,
+              child: DrawerHeader(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: <Widget>[
+                    Image(
+                      image: AssetImage('images/logotanis.png'),
+                      height: 150.0,
+                      width: 150.0,
+                    ),
+//                    Text(
+//                      'Mercantis Mobile',
+//                      textAlign: TextAlign.center,
+//                      style: TextStyle(
+//                        fontSize: 25.0,
+//                        color: kVermelhoBase,
+//                        fontFamily: 'BebasNeue',
+//                      ),
+//                    ),
+                  ],
+                ),
+                decoration: BoxDecoration(
+                  color: kBranco,
+                ),
+              ),
+            ),
+            Expanded(
+              flex: 60,
               //TODO: tirar o padding entre o icone e o titulo
               //TODO: mudar IconSize
               //https://inducesmile.com/google-flutter/how-to-change-the-drawer-hamburger-icon-color-in-flutter/
@@ -307,39 +338,10 @@ class _HomeScreenState extends State<HomeScreen> {
                 // Important: Remove any padding from the ListView.
                 padding: EdgeInsets.zero,
                 children: <Widget>[
-                  DrawerHeader(
-                    child: Text(
-                      'Mercantis Mobile',
-                      textAlign: TextAlign.end,
-                      style: TextStyle(
-                        fontSize: 55.0,
-                        color: Color(0xFFFFFFFF),
-                        fontFamily: 'BebasNeue',
-                      ),
-                    ),
-                    decoration: BoxDecoration(
-                      color: kVermelhoBase,
-                    ),
-                  ),
                   ListTile(
                     leading: Icon(Icons.person_outline),
                     title: Text(
                       'Clientes',
-                      style: TextStyle(
-                        fontSize: 20.0,
-                        color: kVermelhoBase,
-                        fontFamily: 'BebasNeue',
-                      ),
-                    ),
-                    onTap: () {
-                      Navigator.pushNamed(context, '/cliente');
-                    },
-                  ),
-                  Divider(),
-                  ListTile(
-                    leading: Icon(Icons.star_border),
-                    title: Text(
-                      'Favoritos',
                       style: TextStyle(
                         fontSize: 20.0,
                         color: kCinzaEscuro,
@@ -347,7 +349,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       ),
                     ),
                     onTap: () {
-                      Navigator.pushNamed(context, '/favoritos');
+                      Navigator.pushNamed(context, '/cliente');
                     },
                   ),
                   Divider(),
@@ -417,41 +419,44 @@ class _HomeScreenState extends State<HomeScreen> {
                 ],
               ),
             ),
-            Container(
-              // This align moves the children to the bottom
-              child: Align(
-                alignment: FractionalOffset.bottomCenter,
-                // This container holds all the children that will be aligned
-                // on the bottom and should not scroll with the above ListView
-                child: Container(
-                  child: Column(
-                    children: <Widget>[
-                      Divider(),
-                      //ListTile(
-                      // leading: Icon(Icons.settings),
-                      //title: Text('Configurações'),
-                      //onTap: () {
-                      // Navigator.pushNamed(context, '/suporte');
-                      // },
-                      //),
-                      ListTile(
-                        leading: Icon(Icons.exit_to_app),
-                        title: Text(
-                          'Sair',
+            Expanded(
+              flex: 20,
+              child: Container(
+                // This align moves the children to the bottom
+                child: Align(
+                  alignment: FractionalOffset.bottomCenter,
+                  // This container holds all the children that will be aligned
+                  // on the bottom and should not scroll with the above ListView
+                  child: Container(
+                    child: Column(
+                      children: <Widget>[
+                        Divider(),
+                        //ListTile(
+                        // leading: Icon(Icons.settings),
+                        //title: Text('Configurações'),
+                        //onTap: () {
+                        // Navigator.pushNamed(context, '/suporte');
+                        // },
+                        //),
+                        ListTile(
+                          leading: Icon(Icons.exit_to_app),
+                          title: Text(
+                            'Sair',
+                          ),
+                          onTap: () {
+                            Navigator.pushNamed(context, '/login');
+                          },
                         ),
-                        onTap: () {
-                          Navigator.pushNamed(context, '/login');
-                        },
-                      ),
-                      Divider(),
-                      Container(
-                          padding: EdgeInsets.all(10),
-                          height: 50,
-                          child: Text(
-                            "V1.0.0",
-                            style: TextStyle(fontWeight: FontWeight.bold),
-                          )),
-                    ],
+                        Divider(),
+                        Container(
+                            padding: EdgeInsets.all(10),
+                            height: 50,
+                            child: Text(
+                              "V1.0.0",
+                              style: TextStyle(fontWeight: FontWeight.bold),
+                            )),
+                      ],
+                    ),
                   ),
                 ),
               ),

@@ -8,18 +8,18 @@ import 'package:intl/intl.dart';
 import 'package:flutter_conditional_rendering/flutter_conditional_rendering.dart';
 import 'package:flutter_money_formatter/flutter_money_formatter.dart';
 
-class VendaDetalheScreen extends StatefulWidget {
-  VendaDetalheScreen({
+class ConsultaVendaScreen extends StatefulWidget {
+  ConsultaVendaScreen({
     this.pedido,
   });
 
   final pedido;
 
   @override
-  _VendaDetalheScreenState createState() => _VendaDetalheScreenState();
+  _ConsultaVendaScreenState createState() => _ConsultaVendaScreenState();
 }
 
-class _VendaDetalheScreenState extends State<VendaDetalheScreen>
+class _ConsultaVendaScreenState extends State<ConsultaVendaScreen>
     with SingleTickerProviderStateMixin {
   int cod = 0;
   bool isLoading;
@@ -29,6 +29,7 @@ class _VendaDetalheScreenState extends State<VendaDetalheScreen>
   bool _isVisible3 = true;
 
   dynamic cliente;
+  dynamic itemNum;
   dynamic rezaoSocial;
   dynamic fantasia;
   dynamic pedido;
@@ -49,8 +50,11 @@ class _VendaDetalheScreenState extends State<VendaDetalheScreen>
   dynamic CreditoUsado;
   dynamic RentabilidadeCadastro;
   dynamic RentabilidadePedido;
+  dynamic CondPagtoCadastro;
   dynamic CondPagtoPedido;
   dynamic ObsCreditoCadastro;
+  dynamic situacao;
+  dynamic situacaofat;
 
   dynamic prazomedio;
   dynamic diassemcompramax;
@@ -66,6 +70,9 @@ class _VendaDetalheScreenState extends State<VendaDetalheScreen>
   dynamic cp4;
 
   List<Iten> itens = List<Iten>();
+  List<Item> item = List<Item>();
+  List<Observacao> observacao = List<Observacao>();
+  List<Observacao> observacaoInterna = List<Observacao>();
   List<Ocorrencia> ocorrencia = List<Ocorrencia>();
   List<InfoLiberacao> info = List<InfoLiberacao>();
   final formatCurrency = NumberFormat("###,##0.00", "pt_BR");
@@ -75,11 +82,13 @@ class _VendaDetalheScreenState extends State<VendaDetalheScreen>
   @override
   void initState() {
     isLoading = true;
-    _tabController = new TabController(length: 3, vsync: this);
+    _tabController = new TabController(length: 2, vsync: this);
     super.initState();
     _pedido = widget.pedido;
     Services.getVend(_pedido).then((usersFromServer) {
       setState(() {
+        situacao = usersFromServer.situacao;
+        situacaofat = usersFromServer.situacaofat;
         TotCrVencidos = usersFromServer.infoLiberacao.totCrVencidos;
         TotCrAVencer = usersFromServer.infoLiberacao.totCrAVencer;
         MediaAtraso90Dias = usersFromServer.infoLiberacao.mediaAtraso90Dias;
@@ -124,6 +133,8 @@ class _VendaDetalheScreenState extends State<VendaDetalheScreen>
         print(RentabilidadePedido);
         print(RentabilidadeCadastro);
         itens = usersFromServer.itens;
+        observacao = usersFromServer.observacoes.observacao;
+        observacaoInterna = usersFromServer.observacoes.observacaoInterna;
         ocorrencia = usersFromServer.ocorrencias;
 
         if (usersFromServer.tipoEmpenho == null ||
@@ -151,25 +162,14 @@ class _VendaDetalheScreenState extends State<VendaDetalheScreen>
           color: kVermelhoGradiente, //change your color here
         ),
         elevation: 5.0,
-        backgroundColor: kBranco,
-        title: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: <Widget>[
-            Text(
-              'Carregando...',
-              overflow: TextOverflow.clip,
-              style: TextStyle(
-                fontSize: 25.0,
-                color: kVermelhoBase,
-                fontFamily: 'Oswald',
-              ),
-            ),
-            Image(
-              image: AssetImage('images/mercantis.png'),
-              height: 36,
-              width: 36.0,
-            ),
-          ],
+        backgroundColor: Color(0xFFE8E8E8),
+        title: Text(
+          "Carregando...",
+          style: TextStyle(
+            fontSize: 25.0,
+            color: kVermelhoBase,
+            fontFamily: 'Oswald',
+          ),
         ),
       ),
       body: Center(
@@ -192,19 +192,25 @@ class _VendaDetalheScreenState extends State<VendaDetalheScreen>
         title: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: <Widget>[
-            Text(
-              '$fantasia',
-              overflow: TextOverflow.ellipsis,
-              style: TextStyle(
-                fontSize: 18.0,
-                color: kVermelhoBase,
-                fontFamily: 'Oswald',
+            Expanded(
+              flex: 90,
+              child: Text(
+                '$fantasia',
+                overflow: TextOverflow.clip,
+                style: TextStyle(
+                  fontSize: 18.0,
+                  color: kVermelhoBase,
+                  fontFamily: 'Oswald',
+                ),
               ),
             ),
-            Image(
-              image: AssetImage('images/mercantis.png'),
-              height: 36,
-              width: 36.0,
+            Expanded(
+              flex: 10,
+              child: Image(
+                image: AssetImage('images/mercantis.png'),
+                height: 36,
+                width: 36.0,
+              ),
             ),
           ],
         ),
@@ -220,10 +226,6 @@ class _VendaDetalheScreenState extends State<VendaDetalheScreen>
               icon: new Icon(Icons.local_grocery_store),
               text: "Itens",
             ),
-            Tab(
-              icon: new Icon(Icons.library_books),
-              text: "Restrições",
-            ),
           ],
           controller: _tabController,
           indicatorColor: kVermelhoBase,
@@ -235,30 +237,8 @@ class _VendaDetalheScreenState extends State<VendaDetalheScreen>
         children: [
           BodyWidget(),
           produt(),
-          cp(),
         ],
         controller: _tabController,
-      ),
-      bottomNavigationBar: Material(
-        elevation: 5.0,
-        borderRadius: BorderRadius.circular(0.0),
-        color: Colors.green,
-        child: MaterialButton(
-          height: 20,
-          minWidth: MediaQuery.of(context).size.width,
-          padding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
-          onPressed: () {},
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: <Widget>[
-              Text("Liberar Venda",
-                  textAlign: TextAlign.center,
-                  style: TextStyle(fontFamily: 'Oswald', fontSize: 23.0)
-                      .copyWith(
-                          color: Colors.white, fontWeight: FontWeight.w400)),
-            ],
-          ),
-        ),
       ),
     );
   }
@@ -286,6 +266,72 @@ class _VendaDetalheScreenState extends State<VendaDetalheScreen>
                           SizedBox(
                             height: 10,
                           ),
+                          Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: <Widget>[
+                                Text(
+                                  "Situação",
+                                  overflow: TextOverflow.clip,
+                                  style: TextStyle(
+                                      fontSize: 18,
+                                      fontFamily: 'OpenSans',
+                                      color: Colors.black,
+                                      fontWeight: FontWeight.w500),
+                                ),
+                                SizedBox(width: 10),
+                                Flexible(
+                                  child: Text(
+                                    "${situacao.toString()}",
+                                    style: TextStyle(
+                                      fontSize: 18,
+                                      fontFamily: 'OpenSans',
+                                      color: situacao.toString() ==
+                                              "Aprovado Total"
+                                          ? Colors.green
+                                          : Colors.red,
+                                    ),
+                                    overflow: TextOverflow.clip,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                          Divider(),
+                          Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: <Widget>[
+                                Text(
+                                  "Situação Fat.",
+                                  overflow: TextOverflow.clip,
+                                  style: TextStyle(
+                                      fontSize: 18,
+                                      fontFamily: 'OpenSans',
+                                      color: Colors.black,
+                                      fontWeight: FontWeight.w500),
+                                ),
+                                SizedBox(width: 10),
+                                Flexible(
+                                  child: Text(
+                                    "${situacaofat.toString()}",
+                                    style: TextStyle(
+                                      fontSize: 18,
+                                      fontFamily: 'OpenSans',
+                                      color:
+                                          situacaofat.toString() == "Fat.Total"
+                                              ? Colors.green
+                                              : Colors.red,
+                                    ),
+                                    overflow: TextOverflow.clip,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                          Divider(),
                           compras_detalhe_widget(
                               texto1: 'Pedido',
                               texto2: '${_pedido.toString()}'),
@@ -298,7 +344,7 @@ class _VendaDetalheScreenState extends State<VendaDetalheScreen>
                           Visibility(
                             visible: _isVisible,
                             child: compras_detalhe_widget(
-                                texto1: 'Doc.Cliente', texto2: '$tipo_emp'),
+                                texto1: 'Doc. Cliente', texto2: '$tipo_emp'),
                           ),
                           Visibility(visible: _isVisible2, child: Divider()),
                           Visibility(
@@ -307,15 +353,15 @@ class _VendaDetalheScreenState extends State<VendaDetalheScreen>
                                 texto1: 'Número', texto2: '$empenho'),
                           ),
                           Divider(),
-//                          compras_detalhe_widget(
-//                              texto1: 'Valor Faturado',
-//                              texto2:
-//                                  'R\$${formatCurrency.format(valorFaturado)}'),
-//                          Divider(),
-//                          compras_detalhe_widget(
-//                              texto1: 'Valor a Faturar',
-//                              texto2: 'R\$${formatCurrency.format(valorAFat)}'),
-//                          Divider(),
+                          compras_detalhe_widget(
+                              texto1: 'Valor Faturado',
+                              texto2:
+                                  'R\$${formatCurrency.format(valorFaturado)}'),
+                          Divider(),
+                          compras_detalhe_widget(
+                              texto1: 'Valor a Faturar',
+                              texto2: 'R\$${formatCurrency.format(valorAFat)}'),
+                          Divider(),
                           compras_detalhe_widget(
                               texto1: 'Valor Aprovado',
                               texto2: 'R\$${formatCurrency.format(valorAP)}'),
@@ -324,67 +370,6 @@ class _VendaDetalheScreenState extends State<VendaDetalheScreen>
                               texto1: 'Rentabilidade',
                               texto2:
                                   '${percRent.toString().substring(0, 5)}%'),
-                          SizedBox(
-                            height: 10,
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
-                  Container(
-                    width: 500,
-                    child: Card(
-                      elevation: 8.0,
-                      margin: new EdgeInsets.symmetric(
-                          horizontal: 10.0, vertical: 6.0),
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: <Widget>[
-                          SizedBox(
-                            height: 10,
-                          ),
-                          Text(
-                            "Informações da Liberação",
-                            style: TextStyle(
-                                fontSize: 20,
-                                fontFamily: 'OpenSans',
-                                color: Colors.black,
-                                fontWeight: FontWeight.w500),
-                            textAlign: TextAlign.center,
-                          ),
-                          Divider(),
-                          compras_detalhe_widget(
-                            texto1: 'Total CR Vencido',
-                            texto2:
-                                'R\$${formatCurrency.format(TotCrVencidos)}',
-                          ),
-                          Divider(),
-                          compras_detalhe_widget(
-                              texto1: 'Total CR a Vencer',
-                              texto2:
-                                  'R\$${formatCurrency.format(TotCrAVencer)}'),
-                          Divider(),
-                          compras_detalhe_widget(
-                            texto1: 'Media de Atraso(90dias)',
-                            texto2: '$MediaAtraso90Dias',
-                          ),
-                          Divider(),
-                          compras_detalhe_widget(
-                            texto1: 'Crédito Usado',
-                            texto2: 'R\$${formatCurrency.format(CreditoUsado)}',
-                          ),
-                          Divider(),
-                          compras_detalhe_widget(
-                            texto1: 'Rentabilidade Pedido',
-                            texto2:
-                                '${RentabilidadePedido.toString().substring(0, 5)}%',
-                          ),
-                          Divider(),
-                          compras_detalhe_widget(
-                            texto1: 'Cond. Pag. Pedido',
-                            texto2: '$CondPagtoPedido',
-                          ),
                           SizedBox(
                             height: 10,
                           ),
@@ -422,7 +407,7 @@ class _VendaDetalheScreenState extends State<VendaDetalheScreen>
                                     width: 10,
                                   ),
                                   Text(
-                                    'Observação de Crédito',
+                                    'Observação',
                                     overflow: TextOverflow.ellipsis,
                                     style: TextStyle(
                                       fontSize: 25,
@@ -434,12 +419,27 @@ class _VendaDetalheScreenState extends State<VendaDetalheScreen>
                                 ],
                               ),
                             ),
-                            expanded: Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: Text(
-                                '$ObsCreditoCadastro',
-                                softWrap: true,
-                              ),
+                            expanded: Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: <Widget>[
+                                ListView.builder(
+                                  physics: new NeverScrollableScrollPhysics(),
+                                  padding: EdgeInsets.all(5.0),
+                                  shrinkWrap: true,
+                                  itemCount: observacao == null
+                                      ? 0
+                                      : observacao.length,
+                                  itemBuilder:
+                                      (BuildContext context, int index) {
+                                    //return makeCard;
+                                    return Text(
+                                      '${observacao[index].obs.toString().toString()}',
+                                      softWrap: true,
+                                    );
+                                  },
+                                ),
+                              ],
                             ),
                             tapHeaderToExpand: true,
                             hasIcon: true,
@@ -459,74 +459,65 @@ class _VendaDetalheScreenState extends State<VendaDetalheScreen>
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: <Widget>[
                           SizedBox(
-                            height: 10,
+                            height: 8,
                           ),
-                          Text(
-                            "Informações de Crédito",
-                            style: TextStyle(
-                                fontSize: 20,
-                                fontFamily: 'OpenSans',
-                                color: Colors.black,
-                                fontWeight: FontWeight.w500),
-                            textAlign: TextAlign.center,
-                          ),
-                          Divider(),
-                          compras_detalhe_widget(
-                            texto1: 'Limite de Crédito',
-                            texto2:
-                                'R\$${formatCurrency.format(LimiteCredito)}',
-                          ),
-                          Divider(),
-                          compras_detalhe_widget(
-                            texto1: 'Rentabilidade Desejada',
-                            texto2: '${RentabilidadeCadastro.toString()}%',
-                          ),
-                          Divider(),
-                          compras_detalhe_widget(
-                            texto1: 'Prazo Médio',
-                            texto2: '$prazomedio',
-                          ),
-                          Divider(),
-                          compras_detalhe_widget(
-                            texto1: 'Dias Sem Compra Máx.',
-                            texto2: '${diassemcompramax}',
-                          ),
-                          Divider(),
-                          compras_detalhe_widget(
-                            texto1: 'Dias Atraso Máx.',
-                            texto2: '${diasatrasomax}',
-                          ),
-                          Divider(),
-                          compras_detalhe_widget(
-                            texto1: 'Dias Atraso Médio Máx.',
-                            texto2: '$diasatrasomedio',
-                          ),
-                          Divider(),
-                          compras_detalhe_widget(
-                            texto1: 'Dias Atraso',
-                            texto2: '$diasatraso',
-                          ),
-                          Divider(),
-                          compras_detalhe_widget(
-                            texto1: 'Faturamento Mín.',
-                            texto2:
-                                'R\$${formatCurrency.format(faturamentomin)}',
-                          ),
-                          Divider(),
-                          compras_detalhe_widget(
-                            texto1: 'Cond. Pagamento',
-                            texto2:
-                                '${cp1.toString()}, ${cp2.toString()}, ${cp3.toString()} dias',
-                          ),
-                          SizedBox(
-                            height: 10,
+                          ExpandablePanel(
+                            theme: ExpandableThemeData(
+                              iconColor: kVermelhoBase,
+                            ),
+                            header: Padding(
+                              padding: const EdgeInsets.all(5.0),
+                              child: Row(
+                                children: <Widget>[
+                                  Icon(
+                                    Icons.report_problem,
+                                    size: 30,
+                                    color: kVermelhoBase,
+                                  ),
+                                  SizedBox(
+                                    width: 10,
+                                  ),
+                                  Text(
+                                    'Observação Interna',
+                                    overflow: TextOverflow.ellipsis,
+                                    style: TextStyle(
+                                      fontSize: 25,
+                                      fontWeight: FontWeight.w500,
+                                      fontFamily: 'OpenSans',
+                                      color: kVermelhoBase,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                            expanded: Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: <Widget>[
+                                ListView.builder(
+                                  physics: new NeverScrollableScrollPhysics(),
+                                  padding: EdgeInsets.all(5.0),
+                                  shrinkWrap: true,
+                                  itemCount: observacaoInterna == null
+                                      ? 0
+                                      : observacaoInterna.length,
+                                  itemBuilder:
+                                      (BuildContext context, int index) {
+                                    //return makeCard;
+                                    return Text(
+                                      '${observacaoInterna[index].obs.toString().toString()}',
+                                      softWrap: true,
+                                    );
+                                  },
+                                ),
+                              ],
+                            ),
+                            tapHeaderToExpand: true,
+                            hasIcon: true,
                           ),
                         ],
                       ),
                     ),
-                  ),
-                  SizedBox(
-                    height: 10,
                   ),
                 ],
               ),
@@ -541,17 +532,7 @@ class _VendaDetalheScreenState extends State<VendaDetalheScreen>
     return Scaffold(
       backgroundColor: Color(0xFFE3E3E3),
       body: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
-          Padding(
-            padding: const EdgeInsets.all(10.0),
-            child: Text("Total: ${itens.length} itens",
-                style: TextStyle(
-                  color: kCinzaSubtitulo,
-                  fontSize: 20,
-                  fontFamily: 'OpenSans',
-                )),
-          ),
           Expanded(
             child: ListView.builder(
               padding: EdgeInsets.all(0.0),
@@ -569,7 +550,7 @@ class _VendaDetalheScreenState extends State<VendaDetalheScreen>
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: <Widget>[
                         Padding(
-                          padding: const EdgeInsets.all(8.0),
+                          padding: const EdgeInsets.all(10.0),
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             crossAxisAlignment: CrossAxisAlignment.start,
@@ -616,7 +597,6 @@ class _VendaDetalheScreenState extends State<VendaDetalheScreen>
                             ],
                           ),
                         ),
-
                         Divider(),
                         compras_detalhe_widget(
                             texto1: 'Unidade',
@@ -646,124 +626,6 @@ class _VendaDetalheScreenState extends State<VendaDetalheScreen>
                             texto1: 'Rentabilidade %',
                             texto2:
                                 '${itens[index].percRentabilidade.toStringAsFixed(3)}%'),
-                        SizedBox(
-                          height: 10,
-                        ),
-                      ],
-                    ),
-                  ),
-                );
-              },
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-
-  Widget cp() {
-    return Scaffold(
-      backgroundColor: Color(0xFFE3E3E3),
-      body: Column(
-        children: <Widget>[
-          Expanded(
-            child: ListView.builder(
-              padding: EdgeInsets.all(0.0),
-              itemCount: ocorrencia == null ? 0 : ocorrencia.length,
-              itemBuilder: (BuildContext context, int index) {
-                //return makeCard;
-                return Container(
-                  width: 500,
-                  child: Card(
-                    elevation: 8.0,
-                    margin: new EdgeInsets.symmetric(
-                        horizontal: 10.0, vertical: 6.0),
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: <Widget>[
-                        SizedBox(
-                          height: 10,
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.all(10.0),
-                          child: Text(
-                            "${ocorrencia[index].dsOcorrencia}",
-                            style: TextStyle(
-                                fontSize: 18,
-                                fontFamily: 'OpenSans',
-                                color: Colors.black,
-                                fontWeight: FontWeight.w500),
-                            textAlign: TextAlign.start,
-                          ),
-                        ),
-                        Divider(),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: <Widget>[
-                            Text(
-                              "",
-                              overflow: TextOverflow.ellipsis,
-                              style: TextStyle(
-                                  fontSize: 18,
-                                  fontFamily: 'OpenSans',
-                                  color: Colors.black,
-                                  fontWeight: FontWeight.w400),
-                            ),
-                            SizedBox(width: 10),
-                            Flexible(
-                              child: Conditional.single(
-                                context: context,
-                                conditionBuilder: (BuildContext context) =>
-                                    ocorrencia[index].nomeUsrAutorizou != null,
-                                widgetBuilder: (BuildContext context) =>
-                                    Padding(
-                                  padding: const EdgeInsets.all(1.0),
-                                  child: Row(
-                                    mainAxisAlignment: MainAxisAlignment.end,
-                                    children: <Widget>[
-                                      Text(
-                                        "Liberada",
-                                        style: TextStyle(
-                                            fontSize: 18,
-                                            fontFamily: 'OpenSans',
-                                            fontWeight: FontWeight.w400,
-                                            color: Colors.lightGreen),
-                                        overflow: TextOverflow.ellipsis,
-                                      ),
-                                      SizedBox(
-                                        width: 3,
-                                      ),
-                                      Icon(
-                                        Icons.lock_open,
-                                        color: Colors.lightGreen,
-                                      )
-                                    ],
-                                  ),
-                                ),
-                                fallbackBuilder: (BuildContext context) => Row(
-                                  mainAxisAlignment: MainAxisAlignment.end,
-                                  children: <Widget>[
-                                    Text(
-                                      'Não liberada',
-                                      style: TextStyle(
-                                          fontSize: 18,
-                                          color: kVermelhoBase,
-                                          fontWeight: FontWeight.w400),
-                                    ),
-                                    SizedBox(
-                                      width: 3,
-                                    ),
-                                    Icon(
-                                      Icons.lock_outline,
-                                      color: kVermelhoBase,
-                                    )
-                                  ],
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
                         SizedBox(
                           height: 10,
                         ),

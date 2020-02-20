@@ -82,15 +82,25 @@ class _ClienteScreenState extends State<ClienteScreen> {
           color: kVermelhoBase, //change your color here
         ),
         elevation: 5.0,
-        backgroundColor: Color(0xFFE8E8E8),
-        title: Text(
-          titulo,
-          overflow: TextOverflow.ellipsis,
-          style: TextStyle(
-            fontSize: 20.0,
-            color: kVermelhoBase,
-            fontFamily: 'Oswald',
-          ),
+        backgroundColor: kBranco,
+        title: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: <Widget>[
+            Text(
+              titulo,
+              overflow: TextOverflow.clip,
+              style: TextStyle(
+                fontSize: 25.0,
+                color: kVermelhoBase,
+                fontFamily: 'Oswald',
+              ),
+            ),
+            Image(
+              image: AssetImage('images/mercantis.png'),
+              height: 36,
+              width: 36.0,
+            ),
+          ],
         ),
       ),
       body: Center(
@@ -135,7 +145,7 @@ class _ClienteScreenState extends State<ClienteScreen> {
                 ),
                 title: Text(
                   filteredUsers[index].fantasia,
-                  overflow: TextOverflow.ellipsis,
+                  overflow: TextOverflow.clip,
                   style: TextStyle(
                       fontSize: 15.0,
                       color: Colors.black,
@@ -266,14 +276,25 @@ class _ClienteScreenState extends State<ClienteScreen> {
           color: kVermelhoBase, //change your color here
         ),
         elevation: 5.0,
-        backgroundColor: Color(0xFFE8E8E8),
-        title: Text(
-          titulo,
-          style: TextStyle(
-            fontSize: 20.0,
-            color: kVermelhoBase,
-            fontFamily: 'Oswald',
-          ),
+        backgroundColor: kBranco,
+        title: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: <Widget>[
+            Text(
+              titulo,
+              overflow: TextOverflow.clip,
+              style: TextStyle(
+                fontSize: 25.0,
+                color: kVermelhoBase,
+                fontFamily: 'Oswald',
+              ),
+            ),
+            Image(
+              image: AssetImage('images/mercantis.png'),
+              height: 36,
+              width: 36.0,
+            ),
+          ],
         ),
       ),
       body: Column(

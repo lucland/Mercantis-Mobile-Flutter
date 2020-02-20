@@ -40,7 +40,7 @@ class _VendasScreenState extends State<VendasScreen> {
   bool isFavorite = false;
   List<Iten> vendas = List<Iten>();
   List<Iten> filteredVendas = List<Iten>();
-  final formatCurrency = new NumberFormat.simpleCurrency();
+  final formatCurrency = NumberFormat("###,##0.00", "pt_BR");
 
   @override
   void initState() {
@@ -64,14 +64,25 @@ class _VendasScreenState extends State<VendasScreen> {
           color: kVermelhoBase, //change your color here
         ),
         elevation: 5.0,
-        backgroundColor: kCinzaClaroAppBar,
-        title: Text(
-          "Carregando...",
-          style: TextStyle(
-            fontSize: 20.0,
-            color: kVermelhoBase,
-            fontFamily: 'Oswald',
-          ),
+        backgroundColor: kBranco,
+        title: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: <Widget>[
+            Text(
+              'Carregando...',
+              overflow: TextOverflow.clip,
+              style: TextStyle(
+                fontSize: 25.0,
+                color: kVermelhoBase,
+                fontFamily: 'Oswald',
+              ),
+            ),
+            Image(
+              image: AssetImage('images/mercantis.png'),
+              height: 36,
+              width: 36.0,
+            ),
+          ],
         ),
       ),
       body: Center(
@@ -99,14 +110,25 @@ class _VendasScreenState extends State<VendasScreen> {
           color: kVermelhoBase, //change your color here
         ),
         elevation: 5.0,
-        backgroundColor: Color(0xFFE8E8E8),
-        title: Text(
-          title,
-          style: TextStyle(
-            fontSize: 20.0,
-            color: kVermelhoBase,
-            fontFamily: 'Oswald',
-          ),
+        backgroundColor: kBranco,
+        title: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: <Widget>[
+            Text(
+              title,
+              overflow: TextOverflow.clip,
+              style: TextStyle(
+                fontSize: 25.0,
+                color: kVermelhoBase,
+                fontFamily: 'Oswald',
+              ),
+            ),
+            Image(
+              image: AssetImage('images/mercantis.png'),
+              height: 36,
+              width: 36.0,
+            ),
+          ],
         ),
       ),
       body: Column(
@@ -190,14 +212,14 @@ class _VendasScreenState extends State<VendasScreen> {
                                                 color: Colors.black,
                                                 fontWeight: FontWeight.w500),
                                           ),
-                                          Text(
-                                            filteredVendas[index].esFantasia,
-                                            style: TextStyle(
-                                                fontSize: 12.0,
-                                                color: kCinzaEscuro,
-                                                fontWeight: FontWeight.w400),
-                                            textAlign: TextAlign.center,
-                                          ),
+//                                          Text(
+//                                            filteredVendas[index].esFantasia,
+//                                            style: TextStyle(
+//                                                fontSize: 12.0,
+//                                                color: kCinzaEscuro,
+//                                                fontWeight: FontWeight.w400),
+//                                            textAlign: TextAlign.center,
+//                                          ),
                                           SizedBox(
                                             height: 3,
                                           ),
@@ -214,9 +236,6 @@ class _VendasScreenState extends State<VendasScreen> {
                                                       TextOverflow.ellipsis,
                                                   textAlign: TextAlign.center,
                                                 ),
-                                              ),
-                                              SizedBox(
-                                                width: 3,
                                               ),
                                               Expanded(
                                                 child: Text(
@@ -263,7 +282,7 @@ class _VendasScreenState extends State<VendasScreen> {
                                         overflow: TextOverflow.ellipsis,
                                       ),
                                       Text(
-                                        "R${formatCurrency.format(filteredVendas[index].valorAFaturar)}",
+                                        "R\$${formatCurrency.format(filteredVendas[index].valorAFaturar)}",
                                         style: TextStyle(
                                             fontSize: 14.0,
                                             color: kCinzaEscuro,

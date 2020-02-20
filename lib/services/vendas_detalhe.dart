@@ -9,12 +9,12 @@ class Services {
   // 'https://api-mobile.tanis.com.br/api/mobile/v10/Compras/Pedido/';
   static const String urlEND = '?CNPJ=00085822000112';
   static DioConnection dioSrvc = DioConnection();
-  static Future<Venda> getVend(int codVenda) async {
+  static Future<Item> getVend(int codVenda) async {
     try {
       Response response =
           await dioSrvc.dioConnection.get('$url$codVenda$urlEND');
       if (response.statusCode == 200) {
-        Venda list = parseVend(response.data);
+        Item list = parseVend(response.data);
         print(list);
         return list;
       } else {
@@ -35,9 +35,9 @@ class Services {
     }
   }
 
-  static Venda parseVend(Map responseBody) {
+  static Item parseVend(Map responseBody) {
     VendasDetalhe _listaComp = VendasDetalhe.fromMap(responseBody);
-    print(_listaComp.info.venda);
-    return _listaComp.info.venda;
+    print(_listaComp.info.item);
+    return _listaComp.info.item;
   }
 }

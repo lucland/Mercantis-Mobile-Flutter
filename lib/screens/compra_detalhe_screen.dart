@@ -39,7 +39,7 @@ class _CompraDetalheScreenState extends State<CompraDetalheScreen>
   dynamic transp;
   dynamic frete;
   dynamic valorFrete;
-  final formatCurrency = new NumberFormat.simpleCurrency();
+  final formatCurrency = NumberFormat("###,##0.00", "pt_BR");
 
   dynamic ipi;
   dynamic atendido;
@@ -98,17 +98,28 @@ class _CompraDetalheScreenState extends State<CompraDetalheScreen>
     return Scaffold(
       appBar: AppBar(
         iconTheme: IconThemeData(
-          color: kVermelhoGradiente, //change your color here
+          color: kVermelhoBase, //change your color here
         ),
         elevation: 5.0,
-        backgroundColor: Color(0xFFE8E8E8),
-        title: Text(
-          "Carregando...",
-          style: TextStyle(
-            fontSize: 25.0,
-            color: kVermelhoBase,
-            fontFamily: 'Oswald',
-          ),
+        backgroundColor: kBranco,
+        title: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: <Widget>[
+            Text(
+              'Carregando...',
+              overflow: TextOverflow.clip,
+              style: TextStyle(
+                fontSize: 25.0,
+                color: kVermelhoBase,
+                fontFamily: 'Oswald',
+              ),
+            ),
+            Image(
+              image: AssetImage('images/mercantis.png'),
+              height: 36,
+              width: 36.0,
+            ),
+          ],
         ),
       ),
       body: Center(
@@ -250,7 +261,7 @@ class _CompraDetalheScreenState extends State<CompraDetalheScreen>
                           compras_detalhe_widget(
                               texto1: 'Total Pedido',
                               //TODO: formatar os valores de dinheiro com a biblioteca Money Formatter
-                              texto2: 'R${formatCurrency.format(ped)}'),
+                              texto2: 'R\$${formatCurrency.format(ped)}'),
                           SizedBox(
                             height: 10,
                           ),
@@ -284,7 +295,7 @@ class _CompraDetalheScreenState extends State<CompraDetalheScreen>
                             child: compras_detalhe_widget(
                                 texto1: 'Valor do frete',
                                 texto2:
-                                    'R${formatCurrency.format(valorFrete)}'),
+                                    'R\$${formatCurrency.format(valorFrete)}'),
                           ),
                           Visibility(
                             visible: _isVisible,
@@ -472,12 +483,12 @@ class _CompraDetalheScreenState extends State<CompraDetalheScreen>
                         compras_detalhe_widget(
                             texto1: 'Valor Unitário',
                             texto2:
-                                'R${formatCurrency.format(produtos[index].valorUnitario)}'),
+                                'R\$${formatCurrency.format(produtos[index].valorUnitario)}'),
                         Divider(),
                         compras_detalhe_widget(
                             texto1: 'Total',
                             texto2:
-                                'R${formatCurrency.format((produtos[index].valorUnitario * produtos[index].quantidade))}'),
+                                'R\$${formatCurrency.format((produtos[index].valorUnitario * produtos[index].quantidade))}'),
                         SizedBox(
                           height: 10,
                         ),
@@ -573,7 +584,7 @@ class _CompraDetalheScreenState extends State<CompraDetalheScreen>
                                                 texto1:
                                                     '${cpag[index].prazo.toString()}',
                                                 texto2:
-                                                    'R${formatCurrency.format(cpag[index].valor)}'),
+                                                    'R\$${formatCurrency.format(cpag[index].valor)}'),
                                           ],
                                         );
                                       },
@@ -619,12 +630,7 @@ class _CompraDetalheScreenState extends State<CompraDetalheScreen>
                               ),
                               Divider(),
                               compras_detalhe_widget(
-                                  texto1: 'Data',
-                                  texto2:
-                                      '${DateFormat("dd/MM/yyyy").format(DateTime.parse(pen[index].data.toString().substring(0, 10)))}'),
-                              Divider(),
-                              compras_detalhe_widget(
-                                  texto1: 'Prazo',
+                                  texto1: 'Dieas',
                                   texto2: '${pen[index].prazo.toString()}'),
                               SizedBox(
                                 height: 10,

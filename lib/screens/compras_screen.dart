@@ -35,7 +35,7 @@ class _ComprasScreenState extends State<ComprasScreen> {
   final _debouncer = Debouncer(milliseconds: 500);
   int count = 0;
   String title;
-  final formatCurrency = new NumberFormat.simpleCurrency();
+  final formatCurrency = new NumberFormat("###,##0.00", "pt_BR");
   bool isLoading;
   bool isFavorite = false;
   List<Compras> compras = List<Compras>();
@@ -63,14 +63,25 @@ class _ComprasScreenState extends State<ComprasScreen> {
           color: kVermelhoGradiente, //change your color here
         ),
         elevation: 5.0,
-        backgroundColor: Color(0xFFE8E8E8),
-        title: Text(
-          "Carregando...",
-          style: TextStyle(
-            fontSize: 25.0,
-            color: kVermelhoBase,
-            fontFamily: 'Oswald',
-          ),
+        backgroundColor: kBranco,
+        title: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: <Widget>[
+            Text(
+              'Carregando...',
+              overflow: TextOverflow.clip,
+              style: TextStyle(
+                fontSize: 25.0,
+                color: kVermelhoBase,
+                fontFamily: 'Oswald',
+              ),
+            ),
+            Image(
+              image: AssetImage('images/mercantis.png'),
+              height: 36,
+              width: 36.0,
+            ),
+          ],
         ),
       ),
       body: Center(
@@ -98,14 +109,25 @@ class _ComprasScreenState extends State<ComprasScreen> {
           color: kVermelhoBase, //change your color here
         ),
         elevation: 5.0,
-        backgroundColor: Color(0xFFE8E8E8),
-        title: Text(
-          title,
-          style: TextStyle(
-            fontSize: 20.0,
-            color: kVermelhoBase,
-            fontFamily: 'Oswald',
-          ),
+        backgroundColor: kBranco,
+        title: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: <Widget>[
+            Text(
+              title,
+              overflow: TextOverflow.clip,
+              style: TextStyle(
+                fontSize: 25.0,
+                color: kVermelhoBase,
+                fontFamily: 'Oswald',
+              ),
+            ),
+            Image(
+              image: AssetImage('images/mercantis.png'),
+              height: 36,
+              width: 36.0,
+            ),
+          ],
         ),
       ),
       body: Column(
@@ -250,7 +272,7 @@ class _ComprasScreenState extends State<ComprasScreen> {
                                         overflow: TextOverflow.ellipsis,
                                       ),
                                       Text(
-                                        "R${formatCurrency.format(filteredCompras[index].totalPedido)}",
+                                        "R\$${formatCurrency.format(filteredCompras[index].totalPedido)}",
                                         style: TextStyle(
                                             fontSize: 14.0,
                                             color: kCinzaEscuro,

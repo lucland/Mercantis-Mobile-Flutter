@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:mercantis_flutter/constants.dart';
+import 'package:mercantis_flutter/screens/consulta_venda_screen.dart';
 import 'package:mercantis_flutter/screens/venda_detalhe_screen.dart';
 import 'package:mercantis_flutter/services/clientes_detalhe_service.dart';
 import 'package:mercantis_flutter/models/clientes_detalhe.dart';
@@ -29,7 +30,6 @@ class _ClienteDetalheScreenState extends State<ClienteDetalheScreen>
   bool _isVisible2 = true;
   bool _isVisible3 = true;
 
-  List<Recebimento> recebimentos = List<Recebimento>();
   List<Endereco> endereco = List<Endereco>();
   List<Contato> contato = List<Contato>();
   List<Pedido> pedido = List<Pedido>();
@@ -52,19 +52,18 @@ class _ClienteDetalheScreenState extends State<ClienteDetalheScreen>
   dynamic indicadorIE;
 
   TabController _tabController;
-  final formatCurrency = new NumberFormat.simpleCurrency();
+  final formatCurrency = NumberFormat("###,##0.00", "pt_BR");
 
   @override
   void initState() {
     isLoading = true;
-    _tabController = new TabController(length: 3, vsync: this);
+    _tabController = new TabController(length: 2, vsync: this);
     super.initState();
     cod = widget.codCliente;
     Services.getCliente(cod).then((usersFromServer) {
       setState(() {
         print(usersFromServer);
         telefone = usersFromServer.telefone;
-        recebimentos = usersFromServer.recebimentos;
         endereco = usersFromServer.enderecos;
         contato = usersFromServer.contatos;
         pedido = usersFromServer.pedidos;
@@ -106,14 +105,25 @@ class _ClienteDetalheScreenState extends State<ClienteDetalheScreen>
           color: kVermelhoGradiente, //change your color here
         ),
         elevation: 5.0,
-        backgroundColor: Color(0xFFE8E8E8),
-        title: Text(
-          "Carregando...",
-          style: TextStyle(
-            fontSize: 25.0,
-            color: kVermelhoBase,
-            fontFamily: 'Oswald',
-          ),
+        backgroundColor: kBranco,
+        title: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: <Widget>[
+            Text(
+              'Carregando...',
+              overflow: TextOverflow.clip,
+              style: TextStyle(
+                fontSize: 25.0,
+                color: kVermelhoBase,
+                fontFamily: 'Oswald',
+              ),
+            ),
+            Image(
+              image: AssetImage('images/mercantis.png'),
+              height: 36,
+              width: 36.0,
+            ),
+          ],
         ),
       ),
       body: Center(
@@ -164,10 +174,6 @@ class _ClienteDetalheScreenState extends State<ClienteDetalheScreen>
               icon: new Icon(Icons.local_grocery_store),
               text: "Pedidos",
             ),
-            Tab(
-              icon: new Icon(Icons.library_books),
-              text: "Recebimentos",
-            ),
           ],
           controller: _tabController,
           indicatorColor: kVermelhoBase,
@@ -179,7 +185,6 @@ class _ClienteDetalheScreenState extends State<ClienteDetalheScreen>
         children: [
           BodyWidget(),
           produt(),
-          cp(),
         ],
         controller: _tabController,
       ),
@@ -305,6 +310,7 @@ class _ClienteDetalheScreenState extends State<ClienteDetalheScreen>
                               ),
                             ),
                             expanded: ListView.builder(
+                              //TODO: adicionar segundo telefone
                               physics: new NeverScrollableScrollPhysics(),
                               padding: EdgeInsets.all(5.0),
                               shrinkWrap: true,
@@ -677,7 +683,7 @@ class _ClienteDetalheScreenState extends State<ClienteDetalheScreen>
                   onTap: () {
                     Navigator.push(context,
                         MaterialPageRoute(builder: (context) {
-                      return VendaDetalheScreen(
+                      return ConsultaVendaScreen(
                         pedido: pedido[index].pedido,
                       );
                     }));
@@ -696,75 +702,199 @@ class _ClienteDetalheScreenState extends State<ClienteDetalheScreen>
                                 mainAxisAlignment:
                                     MainAxisAlignment.spaceBetween,
                                 children: <Widget>[
+//                                  Flexible(
+//                                    flex: 8,
+//                                    child: Container(
+//                                      padding: EdgeInsets.only(right: 12.0),
+//                                      decoration: new BoxDecoration(
+//                                        border: new Border(
+//                                          right: new BorderSide(
+//                                              width: 2.0, color: kCinzaEscuro),
+//                                        ),
+//                                      ),
+//                                      child: Icon(Icons.monetization_on,
+//                                          color: kCinzaEscuro),
+//                                    ),
+//                                  ),
                                   Flexible(
-                                    flex: 8,
-                                    child: Container(
-                                      padding: EdgeInsets.only(right: 12.0),
-                                      decoration: new BoxDecoration(
-                                        border: new Border(
-                                          right: new BorderSide(
-                                              width: 2.0, color: kCinzaEscuro),
-                                        ),
-                                      ),
-                                      child: Icon(Icons.monetization_on,
-                                          color: kCinzaEscuro),
-                                    ),
-                                  ),
-                                  Flexible(
-                                    flex: 84,
+                                    flex: 92,
                                     child: Padding(
                                       padding: const EdgeInsets.only(left: 8.0),
                                       child: Column(
                                         crossAxisAlignment:
                                             CrossAxisAlignment.center,
                                         children: <Widget>[
-                                          Text(
-                                            pedido[index].razaoSocial,
-                                            overflow: TextOverflow.clip,
-                                            textAlign: TextAlign.center,
-                                            style: TextStyle(
-                                                fontSize: 16.0,
-                                                color: Colors.black,
-                                                fontWeight: FontWeight.w500),
-                                          ),
-                                          Text(
-                                            pedido[index].esFantasia,
-                                            style: TextStyle(
-                                                fontSize: 12.0,
-                                                color: kCinzaEscuro,
-                                                fontWeight: FontWeight.w400),
-                                            textAlign: TextAlign.center,
-                                          ),
-                                          SizedBox(
-                                            height: 3,
-                                          ),
+//                                          Text(
+//                                            pedido[index].razaoSocial,
+//                                            overflow: TextOverflow.clip,
+//                                            textAlign: TextAlign.center,
+//                                            style: TextStyle(
+//                                                fontSize: 16.0,
+//                                                color: Colors.black,
+//                                                fontWeight: FontWeight.w500),
+//                                          ),
+//                                          Text(
+//                                            pedido[index].esFantasia,
+//                                            style: TextStyle(
+//                                                fontSize: 12.0,
+//                                                color: kCinzaEscuro,
+//                                                fontWeight: FontWeight.w400),
+//                                            textAlign: TextAlign.center,
+//                                          ),
+//                                          SizedBox(
+//                                            height: 3,
+//                                          ),
                                           Row(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.center,
                                             children: <Widget>[
                                               Expanded(
-                                                child: Text(
-                                                  "Pedido: ${pedido[index].pedido.toString()} |",
-                                                  style: TextStyle(
-                                                    fontSize: 14.0,
-                                                    color: kCinzaSubtitulo,
-                                                  ),
-                                                  overflow:
-                                                      TextOverflow.ellipsis,
-                                                  textAlign: TextAlign.center,
+                                                child: Row(
+                                                  mainAxisAlignment:
+                                                      MainAxisAlignment.center,
+                                                  children: <Widget>[
+                                                    Text(
+                                                      "Pedido: ",
+                                                      style: TextStyle(
+                                                        fontSize: 15.0,
+                                                        fontWeight:
+                                                            FontWeight.w500,
+                                                        color: kCinzaEscuro,
+                                                      ),
+                                                      overflow:
+                                                          TextOverflow.ellipsis,
+                                                      textAlign:
+                                                          TextAlign.center,
+                                                    ),
+                                                    Text(
+                                                      "${pedido[index].pedido.toString()}",
+                                                      style: TextStyle(
+                                                        fontSize: 15.0,
+                                                        color: Colors.black,
+                                                      ),
+                                                      overflow:
+                                                          TextOverflow.ellipsis,
+                                                      textAlign:
+                                                          TextAlign.center,
+                                                    ),
+                                                  ],
                                                 ),
                                               ),
-                                              SizedBox(
-                                                width: 3,
+                                              Expanded(
+                                                child: Row(
+                                                  mainAxisAlignment:
+                                                      MainAxisAlignment.center,
+                                                  children: <Widget>[
+                                                    Text(
+                                                      " Emissão: ",
+                                                      style: TextStyle(
+                                                        fontSize: 15.0,
+                                                        color: kCinzaEscuro,
+                                                        fontWeight:
+                                                            FontWeight.w500,
+                                                      ),
+                                                      overflow:
+                                                          TextOverflow.ellipsis,
+                                                      textAlign:
+                                                          TextAlign.center,
+                                                    ),
+                                                    Text(
+                                                      "${DateFormat("dd/MM/yyyy").format(DateTime.parse(pedido[index].data.toString().substring(0, 10)))}",
+                                                      style: TextStyle(
+                                                        fontSize: 15.0,
+                                                        color: Colors.black,
+                                                      ),
+                                                      overflow:
+                                                          TextOverflow.ellipsis,
+                                                      textAlign:
+                                                          TextAlign.center,
+                                                    ),
+                                                  ],
+                                                ),
+                                              ),
+                                            ],
+                                          ),
+                                          SizedBox(height: 5),
+                                          Row(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.center,
+                                            children: <Widget>[
+                                              Expanded(
+                                                child: Row(
+                                                  mainAxisAlignment:
+                                                      MainAxisAlignment.center,
+                                                  children: <Widget>[
+                                                    Text(
+                                                      "Situação: ",
+                                                      style: TextStyle(
+                                                        fontSize: 12.0,
+                                                        color: kCinzaEscuro,
+                                                        fontWeight:
+                                                            FontWeight.w500,
+                                                      ),
+                                                      overflow:
+                                                          TextOverflow.clip,
+                                                      textAlign:
+                                                          TextAlign.center,
+                                                    ),
+                                                    Text(
+                                                      "${pedido[index].situacao.toString()}",
+                                                      style: TextStyle(
+                                                        fontSize: 12.0,
+                                                        fontWeight:
+                                                            FontWeight.w500,
+                                                        color: pedido[index]
+                                                                    .situacao
+                                                                    .toString() ==
+                                                                "Aprovado Total"
+                                                            ? Colors.green
+                                                            : Colors.red,
+                                                      ),
+                                                      overflow:
+                                                          TextOverflow.clip,
+                                                      textAlign:
+                                                          TextAlign.center,
+                                                    ),
+                                                  ],
+                                                ),
                                               ),
                                               Expanded(
-                                                child: Text(
-                                                  "Emissão: ${DateFormat("dd/MM/yyyy").format(DateTime.parse(pedido[index].data.toString().substring(0, 10)))}",
-                                                  style: TextStyle(
-                                                    fontSize: 14.0,
-                                                    color: kCinzaSubtitulo,
-                                                  ),
-                                                  overflow:
-                                                      TextOverflow.ellipsis,
-                                                  textAlign: TextAlign.center,
+                                                child: Row(
+                                                  mainAxisAlignment:
+                                                      MainAxisAlignment.center,
+                                                  children: <Widget>[
+                                                    Text(
+                                                      " Sit.Fat.: ",
+                                                      style: TextStyle(
+                                                        fontSize: 12.0,
+                                                        fontWeight:
+                                                            FontWeight.w500,
+                                                        color: kCinzaEscuro,
+                                                      ),
+                                                      overflow:
+                                                          TextOverflow.clip,
+                                                      textAlign:
+                                                          TextAlign.center,
+                                                    ),
+                                                    Text(
+                                                      "${pedido[index].situacaofat.toString()}",
+                                                      style: TextStyle(
+                                                        fontSize: 12.0,
+                                                        fontWeight:
+                                                            FontWeight.w500,
+                                                        color: pedido[index]
+                                                                    .situacaofat
+                                                                    .toString() ==
+                                                                "Fat.Total"
+                                                            ? Colors.green
+                                                            : Colors.red,
+                                                      ),
+                                                      overflow:
+                                                          TextOverflow.clip,
+                                                      textAlign:
+                                                          TextAlign.center,
+                                                    ),
+                                                  ],
                                                 ),
                                               ),
                                             ],
@@ -800,7 +930,7 @@ class _ClienteDetalheScreenState extends State<ClienteDetalheScreen>
                                         overflow: TextOverflow.ellipsis,
                                       ),
                                       Text(
-                                        "R${formatCurrency.format(pedido[index].valorAFaturar)}",
+                                        "R\$${formatCurrency.format(pedido[index].valorAFaturar)}",
                                         style: TextStyle(
                                             fontSize: 14.0,
                                             color: kCinzaEscuro,
@@ -818,80 +948,6 @@ class _ClienteDetalheScreenState extends State<ClienteDetalheScreen>
                             ),
                           ],
                         )),
-                  ),
-                );
-              },
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-
-  Widget cp() {
-    return Scaffold(
-      backgroundColor: Color(0xFFE3E3E3),
-      body: Column(
-        children: <Widget>[
-          Expanded(
-            child: ListView.builder(
-              padding: EdgeInsets.all(0.0),
-              itemCount: recebimentos == null ? 0 : recebimentos.length,
-              itemBuilder: (BuildContext context, int index) {
-                //return makeCard;
-                return Container(
-                  width: 500,
-                  child: Card(
-                    elevation: 8.0,
-                    margin: new EdgeInsets.symmetric(
-                        horizontal: 10.0, vertical: 6.0),
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: <Widget>[
-                        SizedBox(
-                          height: 10,
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: Text(
-                            "Número CR " +
-                                '${recebimentos[index].numeroCr.toString()}',
-                            style: TextStyle(
-                                fontSize: 20,
-                                fontFamily: 'OpenSans',
-                                color: Colors.black,
-                                fontWeight: FontWeight.w500),
-                            textAlign: TextAlign.center,
-                          ),
-                        ),
-                        Divider(),
-                        compras_detalhe_widget(
-                          texto1: 'Status',
-                          texto2: '${recebimentos[index].status}',
-                        ),
-                        Divider(),
-                        compras_detalhe_widget(
-                          texto1: 'Vencimento',
-                          texto2:
-                              '${DateFormat("dd/MM/yyyy").format(DateTime.parse(recebimentos[index].vencimento.toString().substring(0, 10)))}',
-                        ),
-                        Divider(),
-                        compras_detalhe_widget(
-                          texto1: 'Data de Recebimento',
-                          texto2:
-                              '${DateFormat("dd/MM/yyyy").format(DateTime.parse(recebimentos[index].dtRecebimento.toString().substring(0, 10)))}',
-                        ),
-                        Divider(),
-                        compras_detalhe_widget(
-                            texto1: 'Valor Recebido',
-                            texto2:
-                                'R${formatCurrency.format(recebimentos[index].valorRecebido)}'),
-                        SizedBox(
-                          height: 10,
-                        ),
-                      ],
-                    ),
                   ),
                 );
               },

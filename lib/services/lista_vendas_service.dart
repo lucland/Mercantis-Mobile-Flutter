@@ -34,7 +34,7 @@ class Services {
   }
 
   static List<Iten> parseVendas(Map responseBody) {
-    VendasLista _listaVendas = VendasLista.fromMap(responseBody);
+    ListaVendas _listaVendas = ListaVendas.fromMap(responseBody);
     print(_listaVendas.info.itens);
     return _listaVendas.info.itens;
   }
