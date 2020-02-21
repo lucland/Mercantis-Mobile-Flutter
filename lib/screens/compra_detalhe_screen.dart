@@ -96,6 +96,7 @@ class _CompraDetalheScreenState extends State<CompraDetalheScreen>
 
   Widget indicator() {
     return Scaffold(
+      backgroundColor: kCinzaClaroAzulado,
       appBar: AppBar(
         iconTheme: IconThemeData(
           color: kVermelhoBase, //change your color here
@@ -133,6 +134,7 @@ class _CompraDetalheScreenState extends State<CompraDetalheScreen>
 
   Widget Tabi() {
     return new Scaffold(
+      backgroundColor: kCinzaClaroAzulado,
       appBar: new AppBar(
         iconTheme: IconThemeData(
           color: kVermelhoBase, //change your color here
@@ -215,7 +217,7 @@ class _CompraDetalheScreenState extends State<CompraDetalheScreen>
 
   Widget BodyWidget() {
     return Scaffold(
-      backgroundColor: Color(0xFFE3E3E3),
+      backgroundColor: kCinzaClaroAzulado,
       body: Column(
         children: <Widget>[
           Expanded(
@@ -279,9 +281,6 @@ class _CompraDetalheScreenState extends State<CompraDetalheScreen>
                         mainAxisAlignment: MainAxisAlignment.center,
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: <Widget>[
-                          SizedBox(
-                            height: 10,
-                          ),
                           compras_detalhe_widget(
                             texto1: 'Frete',
                             texto2: '${frete.toString()}',
@@ -308,9 +307,6 @@ class _CompraDetalheScreenState extends State<CompraDetalheScreen>
                               texto2: '$transp',
                             ),
                           ),
-                          SizedBox(
-                            height: 10,
-                          ),
                         ],
                       ),
                     ),
@@ -325,20 +321,17 @@ class _CompraDetalheScreenState extends State<CompraDetalheScreen>
                         mainAxisAlignment: MainAxisAlignment.center,
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: <Widget>[
-                          SizedBox(
-                            height: 8,
-                          ),
                           ExpandablePanel(
                             theme: ExpandableThemeData(
                               iconColor: kVermelhoBase,
                             ),
                             header: Padding(
-                              padding: const EdgeInsets.all(5.0),
+                              padding: const EdgeInsets.all(8.0),
                               child: Row(
                                 children: <Widget>[
                                   Icon(
                                     Icons.report_problem,
-                                    size: 30,
+                                    size: 20,
                                     color: kVermelhoBase,
                                   ),
                                   SizedBox(
@@ -348,7 +341,7 @@ class _CompraDetalheScreenState extends State<CompraDetalheScreen>
                                     'Observação Interna',
                                     overflow: TextOverflow.ellipsis,
                                     style: TextStyle(
-                                      fontSize: 25,
+                                      fontSize: 20,
                                       fontWeight: FontWeight.w500,
                                       fontFamily: 'OpenSans',
                                       color: kVermelhoBase,
@@ -380,20 +373,17 @@ class _CompraDetalheScreenState extends State<CompraDetalheScreen>
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.start,
                         children: <Widget>[
-                          SizedBox(
-                            height: 8,
-                          ),
                           ExpandablePanel(
                             theme: ExpandableThemeData(
                               iconColor: kVermelhoBase,
                             ),
                             header: Padding(
-                              padding: const EdgeInsets.all(5.0),
+                              padding: const EdgeInsets.all(8.0),
                               child: Row(
                                 children: <Widget>[
                                   Icon(
                                     Icons.report_problem,
-                                    size: 30,
+                                    size: 20,
                                     color: kVermelhoBase,
                                   ),
                                   SizedBox(
@@ -403,7 +393,7 @@ class _CompraDetalheScreenState extends State<CompraDetalheScreen>
                                     'Observação',
                                     overflow: TextOverflow.ellipsis,
                                     style: TextStyle(
-                                      fontSize: 25,
+                                      fontSize: 20,
                                       fontWeight: FontWeight.w500,
                                       fontFamily: 'OpenSans',
                                       color: kVermelhoBase,
@@ -440,7 +430,7 @@ class _CompraDetalheScreenState extends State<CompraDetalheScreen>
 
   Widget produt() {
     return Scaffold(
-      backgroundColor: Color(0xFFE3E3E3),
+      backgroundColor: kCinzaClaroAzulado,
       body: Column(
         children: <Widget>[
           Expanded(
@@ -506,7 +496,7 @@ class _CompraDetalheScreenState extends State<CompraDetalheScreen>
 
   Widget cp() {
     return Scaffold(
-      backgroundColor: Color(0xFFE3E3E3),
+      backgroundColor: kCinzaClaroAzulado,
       body: Column(
         children: <Widget>[
           Expanded(
@@ -630,7 +620,7 @@ class _CompraDetalheScreenState extends State<CompraDetalheScreen>
                               ),
                               Divider(),
                               compras_detalhe_widget(
-                                  texto1: 'Dieas',
+                                  texto1: 'Dias',
                                   texto2: '${pen[index].prazo.toString()}'),
                               SizedBox(
                                 height: 10,

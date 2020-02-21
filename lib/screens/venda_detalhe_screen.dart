@@ -146,6 +146,7 @@ class _VendaDetalheScreenState extends State<VendaDetalheScreen>
 
   Widget indicator() {
     return Scaffold(
+      backgroundColor: kCinzaClaroAzulado,
       appBar: AppBar(
         iconTheme: IconThemeData(
           color: kVermelhoGradiente, //change your color here
@@ -183,6 +184,7 @@ class _VendaDetalheScreenState extends State<VendaDetalheScreen>
 
   Widget Tabi() {
     return new Scaffold(
+      backgroundColor: kCinzaClaroAzulado,
       appBar: new AppBar(
         iconTheme: IconThemeData(
           color: kVermelhoBase, //change your color here
@@ -265,7 +267,7 @@ class _VendaDetalheScreenState extends State<VendaDetalheScreen>
 
   Widget BodyWidget() {
     return Scaffold(
-      backgroundColor: Color(0xFFE3E3E3),
+      backgroundColor: kCinzaClaroAzulado,
       body: Column(
         children: <Widget>[
           Expanded(
@@ -402,20 +404,17 @@ class _VendaDetalheScreenState extends State<VendaDetalheScreen>
                         mainAxisAlignment: MainAxisAlignment.center,
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: <Widget>[
-                          SizedBox(
-                            height: 8,
-                          ),
                           ExpandablePanel(
                             theme: ExpandableThemeData(
                               iconColor: kVermelhoBase,
                             ),
                             header: Padding(
-                              padding: const EdgeInsets.all(5.0),
+                              padding: const EdgeInsets.all(8.0),
                               child: Row(
                                 children: <Widget>[
                                   Icon(
                                     Icons.report_problem,
-                                    size: 30,
+                                    size: 20,
                                     color: kVermelhoBase,
                                   ),
                                   SizedBox(
@@ -425,7 +424,7 @@ class _VendaDetalheScreenState extends State<VendaDetalheScreen>
                                     'Observação de Crédito',
                                     overflow: TextOverflow.ellipsis,
                                     style: TextStyle(
-                                      fontSize: 25,
+                                      fontSize: 20,
                                       fontWeight: FontWeight.w500,
                                       fontFamily: 'OpenSans',
                                       color: kVermelhoBase,
@@ -539,7 +538,7 @@ class _VendaDetalheScreenState extends State<VendaDetalheScreen>
 
   Widget produt() {
     return Scaffold(
-      backgroundColor: Color(0xFFE3E3E3),
+      backgroundColor: kCinzaClaroAzulado,
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
@@ -548,7 +547,7 @@ class _VendaDetalheScreenState extends State<VendaDetalheScreen>
             child: Text("Total: ${itens.length} itens",
                 style: TextStyle(
                   color: kCinzaSubtitulo,
-                  fontSize: 20,
+                  fontSize: 15,
                   fontFamily: 'OpenSans',
                 )),
           ),
@@ -600,7 +599,7 @@ class _VendaDetalheScreenState extends State<VendaDetalheScreen>
                                       child: Text(
                                         "${itens[index].item.toString()}",
                                         style: TextStyle(
-                                            fontSize: 20,
+                                            fontSize: 15,
                                             fontFamily: 'OpenSans',
                                             color: kBranco,
                                             fontWeight: FontWeight.w400),
@@ -608,7 +607,7 @@ class _VendaDetalheScreenState extends State<VendaDetalheScreen>
                                         overflow: TextOverflow.clip,
                                       ),
                                       backgroundColor: kVermelhoBase,
-                                      radius: 15.0,
+                                      radius: 12.0,
                                     ),
                                   ],
                                 ),
@@ -663,7 +662,7 @@ class _VendaDetalheScreenState extends State<VendaDetalheScreen>
 
   Widget cp() {
     return Scaffold(
-      backgroundColor: Color(0xFFE3E3E3),
+      backgroundColor: kCinzaClaroAzulado,
       body: Column(
         children: <Widget>[
           Expanded(
@@ -718,7 +717,7 @@ class _VendaDetalheScreenState extends State<VendaDetalheScreen>
                                     ocorrencia[index].nomeUsrAutorizou != null,
                                 widgetBuilder: (BuildContext context) =>
                                     Padding(
-                                  padding: const EdgeInsets.all(1.0),
+                                  padding: const EdgeInsets.all(3.0),
                                   child: Row(
                                     mainAxisAlignment: MainAxisAlignment.end,
                                     children: <Widget>[
@@ -741,24 +740,28 @@ class _VendaDetalheScreenState extends State<VendaDetalheScreen>
                                     ],
                                   ),
                                 ),
-                                fallbackBuilder: (BuildContext context) => Row(
-                                  mainAxisAlignment: MainAxisAlignment.end,
-                                  children: <Widget>[
-                                    Text(
-                                      'Não liberada',
-                                      style: TextStyle(
-                                          fontSize: 18,
-                                          color: kVermelhoBase,
-                                          fontWeight: FontWeight.w400),
-                                    ),
-                                    SizedBox(
-                                      width: 3,
-                                    ),
-                                    Icon(
-                                      Icons.lock_outline,
-                                      color: kVermelhoBase,
-                                    )
-                                  ],
+                                fallbackBuilder: (BuildContext context) =>
+                                    Padding(
+                                  padding: const EdgeInsets.all(3.0),
+                                  child: Row(
+                                    mainAxisAlignment: MainAxisAlignment.end,
+                                    children: <Widget>[
+                                      Text(
+                                        'Não liberada',
+                                        style: TextStyle(
+                                            fontSize: 18,
+                                            color: kVermelhoBase,
+                                            fontWeight: FontWeight.w400),
+                                      ),
+                                      SizedBox(
+                                        width: 3,
+                                      ),
+                                      Icon(
+                                        Icons.lock_outline,
+                                        color: kVermelhoBase,
+                                      )
+                                    ],
+                                  ),
                                 ),
                               ),
                             ),

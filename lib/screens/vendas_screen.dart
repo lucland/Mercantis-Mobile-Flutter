@@ -59,6 +59,7 @@ class _VendasScreenState extends State<VendasScreen> {
 
   Widget indicator() {
     return Scaffold(
+      backgroundColor: kCinzaClaroAzulado,
       appBar: AppBar(
         iconTheme: IconThemeData(
           color: kVermelhoBase, //change your color here
@@ -105,6 +106,7 @@ class _VendasScreenState extends State<VendasScreen> {
   Widget showData() {
     //TODO: pull to refresh
     return Scaffold(
+      backgroundColor: kCinzaClaroAzulado,
       appBar: AppBar(
         iconTheme: IconThemeData(
           color: kVermelhoBase, //change your color here
@@ -133,25 +135,25 @@ class _VendasScreenState extends State<VendasScreen> {
       ),
       body: Column(
         children: <Widget>[
-          TextField(
-            decoration: InputDecoration(
-              contentPadding: EdgeInsets.all(15.0),
-              hintText: "Procurar Venda...",
-            ),
-            onChanged: (string) {
-              isLoading = true;
-              _debouncer.run(() {
-                filteredVendas = vendas
-                    .where((u) => (u.fantasia
-                            .toLowerCase()
-                            .contains(string.toLowerCase()) ||
-                        u.razaoSocial
-                            .toLowerCase()
-                            .contains(string.toLowerCase())))
-                    .toList();
-              });
-            },
-          ),
+//          TextField(
+//            decoration: InputDecoration(
+//              contentPadding: EdgeInsets.all(15.0),
+//              hintText: "Procurar Venda...",
+//            ),
+//            onChanged: (string) {
+//              isLoading = true;
+//              _debouncer.run(() {
+//                filteredVendas = vendas
+//                    .where((u) => (u.fantasia
+//                            .toLowerCase()
+//                            .contains(string.toLowerCase()) ||
+//                        u.razaoSocial
+//                            .toLowerCase()
+//                            .contains(string.toLowerCase())))
+//                    .toList();
+//              });
+//            },
+//          ),
           Expanded(
             child: ListView.builder(
               padding: EdgeInsets.all(10.0),
@@ -172,7 +174,10 @@ class _VendasScreenState extends State<VendasScreen> {
                     margin: new EdgeInsets.symmetric(
                         horizontal: 2.0, vertical: 6.0),
                     child: Container(
-                        decoration: BoxDecoration(color: Color(0xFFE8E8E8)),
+                        decoration: BoxDecoration(
+                          color: kBranco,
+                          borderRadius: BorderRadius.circular(15.00),
+                        ),
                         child: Column(
                           children: <Widget>[
                             Padding(

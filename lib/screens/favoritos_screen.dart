@@ -59,6 +59,7 @@ class _FavoritosScreenState extends State<FavoritosScreen> {
 
   Widget indicator() {
     return Scaffold(
+      backgroundColor: kCinzaClaroAzulado,
       appBar: AppBar(
         iconTheme: IconThemeData(
           color: kVermelhoBase, //change your color here
@@ -93,6 +94,7 @@ class _FavoritosScreenState extends State<FavoritosScreen> {
 
   Widget showData() {
     return Scaffold(
+      backgroundColor: kCinzaClaroAzulado,
       appBar: AppBar(
         iconTheme: IconThemeData(
           color: kVermelhoBase, //change your color here

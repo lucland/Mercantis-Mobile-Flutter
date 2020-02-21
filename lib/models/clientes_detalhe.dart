@@ -442,6 +442,7 @@ class Pedido {
   final String situacaofat;
   final String situacao;
   final double valorAFaturar;
+  final double valorAprovado;
 
   Pedido({
     this.esCodigo,
@@ -453,6 +454,7 @@ class Pedido {
     this.situacaofat,
     this.situacao,
     this.valorAFaturar,
+    this.valorAprovado,
   });
 
   Pedido copyWith({
@@ -465,6 +467,7 @@ class Pedido {
     String situacaofat,
     String situacao,
     double valorAFaturar,
+    double valorAprovado,
   }) =>
       Pedido(
         esCodigo: esCodigo ?? this.esCodigo,
@@ -476,6 +479,7 @@ class Pedido {
         situacaofat: situacaofat ?? this.situacaofat,
         situacao: situacao ?? this.situacao,
         valorAFaturar: valorAFaturar ?? this.valorAFaturar,
+        valorAprovado: valorAprovado ?? this.valorAprovado,
       );
 
   factory Pedido.fromJson(String str) => Pedido.fromMap(json.decode(str));
@@ -494,6 +498,9 @@ class Pedido {
         valorAFaturar: json["valorAFaturar"] == null
             ? null
             : json["valorAFaturar"].toDouble(),
+        valorAprovado: json["valorAprovado"] == null
+            ? null
+            : json["valorAprovado"].toDouble(),
       );
 
   Map<String, dynamic> toMap() => {
@@ -506,5 +513,6 @@ class Pedido {
         "situacaofat": situacaofat == null ? null : situacaofat,
         "situacao": situacao == null ? null : situacao,
         "valorAFaturar": valorAFaturar == null ? null : valorAFaturar,
+        "valorAprovado": valorAprovado == null ? null : valorAprovado,
       };
 }

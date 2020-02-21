@@ -10,19 +10,31 @@ class _DashboardScreenState extends State<DashboardScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: kCinzaClaroAzulado,
       appBar: AppBar(
         iconTheme: IconThemeData(
-          color: kVermelhoGradiente, //change your color here
+          color: kVermelhoBase, //change your color here
         ),
         elevation: 5.0,
-        backgroundColor: Color(0xFFE8E8E8),
-        title: Text(
-          'Dashboard',
-          style: TextStyle(
-            fontSize: 20.0,
-            color: kVermelhoBase,
-            fontFamily: 'Oswald',
-          ),
+        backgroundColor: kBranco,
+        title: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: <Widget>[
+            Text(
+              'Dashboard',
+              overflow: TextOverflow.clip,
+              style: TextStyle(
+                fontSize: 25.0,
+                color: kVermelhoBase,
+                fontFamily: 'Oswald',
+              ),
+            ),
+            Image(
+              image: AssetImage('images/mercantis.png'),
+              height: 36,
+              width: 36.0,
+            ),
+          ],
         ),
       ),
       body: Text(''),

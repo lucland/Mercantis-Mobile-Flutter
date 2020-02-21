@@ -100,6 +100,7 @@ class _ClienteDetalheScreenState extends State<ClienteDetalheScreen>
 
   Widget indicator() {
     return Scaffold(
+      backgroundColor: kCinzaClaroAzulado,
       appBar: AppBar(
         iconTheme: IconThemeData(
           color: kVermelhoGradiente, //change your color here
@@ -137,6 +138,7 @@ class _ClienteDetalheScreenState extends State<ClienteDetalheScreen>
 
   Widget Tabi() {
     return new Scaffold(
+      backgroundColor: kCinzaClaroAzulado,
       appBar: new AppBar(
         iconTheme: IconThemeData(
           color: kVermelhoBase, //change your color here
@@ -193,7 +195,7 @@ class _ClienteDetalheScreenState extends State<ClienteDetalheScreen>
 
   Widget BodyWidget() {
     return Scaffold(
-      backgroundColor: Color(0xFFE3E3E3),
+      backgroundColor: kCinzaClaroAzulado,
       body: Column(
         children: <Widget>[
           Expanded(
@@ -269,7 +271,6 @@ class _ClienteDetalheScreenState extends State<ClienteDetalheScreen>
                       ),
                     ),
                   ),
-
                   Container(
                     width: 500,
                     child: Card(
@@ -479,183 +480,6 @@ class _ClienteDetalheScreenState extends State<ClienteDetalheScreen>
                       ),
                     ),
                   ),
-//                  Expanded(
-//                    child: Container(
-//                      width: 500,
-//                      child: Card(
-//                        elevation: 8.0,
-//                        margin: new EdgeInsets.symmetric(
-//                            horizontal: 10.0, vertical: 6.0),
-//                        child: Column(
-//                          mainAxisAlignment: MainAxisAlignment.center,
-//                          crossAxisAlignment: CrossAxisAlignment.center,
-//                          children: <Widget>[
-//                            SizedBox(
-//                              height: 10,
-//                            ),
-//                            Text(
-//                              "Informações da Liberação",
-//                              style: TextStyle(
-//                                  fontSize: 20,
-//                                  fontFamily: 'OpenSans',
-//                                  color: Colors.black,
-//                                  fontWeight: FontWeight.w500),
-//                              textAlign: TextAlign.center,
-//                            ),
-//                            Divider(),
-//                            compras_detalhe_widget(
-//                              texto1: 'Total CR Vencido',
-//                              texto2: 'R',
-//                            ),
-//                            Divider(),
-//                            compras_detalhe_widget(
-//                                texto1: 'Total CR a Vencer', texto2: 'R'),
-//                            Divider(),
-//                            compras_detalhe_widget(
-//                              texto1: 'Media de Atraso(90dias)',
-//                              texto2: '',
-//                            ),
-//                            Divider(),
-//                            compras_detalhe_widget(
-//                              texto1: 'Crédito Usado',
-//                              texto2: 'R',
-//                            ),
-//                            Divider(),
-//                            compras_detalhe_widget(
-//                              texto1: 'Rentabilidade Pedido',
-//                              texto2: '%',
-//                            ),
-//                            Divider(),
-//                            compras_detalhe_widget(
-//                              texto1: 'Cond. Pag. Pedido',
-//                              texto2: '',
-//                            ),
-//                            SizedBox(
-//                              height: 10,
-//                            ),
-//                          ],
-//                        ),
-//                      ),
-//                    ),
-//                  ),
-//                  Container(
-//                    width: 500,
-//                    child: Card(
-//                      elevation: 8.0,
-//                      margin: new EdgeInsets.symmetric(
-//                          horizontal: 10.0, vertical: 6.0),
-//                      child: Column(
-//                        mainAxisAlignment: MainAxisAlignment.center,
-//                        crossAxisAlignment: CrossAxisAlignment.center,
-//                        children: <Widget>[
-//                          SizedBox(
-//                            height: 8,
-//                          ),
-//                          ExpandablePanel(
-//                            theme: ExpandableThemeData(
-//                              iconColor: kVermelhoBase,
-//                            ),
-//                            header: Padding(
-//                              padding: const EdgeInsets.all(8.0),
-//                              child: Text(
-//                                'OBSERVAÇÃO DE CRÉDITO',
-//                                overflow: TextOverflow.ellipsis,
-//                                style: TextStyle(
-//                                  fontSize: 20,
-//                                  fontWeight: FontWeight.w500,
-//                                  fontFamily: 'OpenSans',
-//                                  color: kVermelhoBase,
-//                                ),
-//                              ),
-//                            ),
-//                            expanded: Padding(
-//                              padding: const EdgeInsets.all(8.0),
-//                              child: Text(
-//                                '',
-//                                softWrap: true,
-//                              ),
-//                            ),
-//                            tapHeaderToExpand: true,
-//                            hasIcon: true,
-//                          ),
-//                        ],
-//                      ),
-//                    ),
-//                  ),
-//                  Container(
-//                    width: 500,
-//                    child: Card(
-//                      elevation: 8.0,
-//                      margin: new EdgeInsets.symmetric(
-//                          horizontal: 10.0, vertical: 6.0),
-//                      child: Column(
-//                        mainAxisAlignment: MainAxisAlignment.center,
-//                        crossAxisAlignment: CrossAxisAlignment.center,
-//                        children: <Widget>[
-//                          SizedBox(
-//                            height: 10,
-//                          ),
-//                          Text(
-//                            "Informações de Crédito",
-//                            style: TextStyle(
-//                                fontSize: 20,
-//                                fontFamily: 'OpenSans',
-//                                color: Colors.black,
-//                                fontWeight: FontWeight.w500),
-//                            textAlign: TextAlign.center,
-//                          ),
-//                          Divider(),
-//                          compras_detalhe_widget(
-//                            texto1: 'Limite de Crédito',
-//                            texto2: 'R',
-//                          ),
-//                          Divider(),
-//                          compras_detalhe_widget(
-//                            texto1: 'Rentabilidade Desejada',
-//                            texto2: '%',
-//                          ),
-//                          Divider(),
-//                          compras_detalhe_widget(
-//                            texto1: 'Prazo Médio',
-//                            texto2: '',
-//                          ),
-//                          Divider(),
-//                          compras_detalhe_widget(
-//                            texto1: 'Dias Sem Compra Máx.',
-//                            texto2: '',
-//                          ),
-//                          Divider(),
-//                          compras_detalhe_widget(
-//                            texto1: 'Dias Atraso Máx.',
-//                            texto2: '',
-//                          ),
-//                          Divider(),
-//                          compras_detalhe_widget(
-//                            texto1: 'Dias Atrsado Médio Máx.',
-//                            texto2: '',
-//                          ),
-//                          Divider(),
-//                          compras_detalhe_widget(
-//                            texto1: 'Dias Atraso',
-//                            texto2: '',
-//                          ),
-//                          Divider(),
-//                          compras_detalhe_widget(
-//                            texto1: 'Faturamento Mín.',
-//                            texto2: 'R',
-//                          ),
-//                          Divider(),
-//                          compras_detalhe_widget(
-//                            texto1: 'Cond. Pagamento',
-//                            texto2: '',
-//                          ),
-//                          SizedBox(
-//                            height: 10,
-//                          ),
-//                        ],
-//                      ),
-//                    ),
-//                  ),
                   SizedBox(
                     height: 10,
                   ),
@@ -670,7 +494,7 @@ class _ClienteDetalheScreenState extends State<ClienteDetalheScreen>
 
   Widget produt() {
     return Scaffold(
-      backgroundColor: Color(0xFFE3E3E3),
+      backgroundColor: kCinzaClaroAzulado,
       body: Column(
         children: <Widget>[
           Expanded(
@@ -693,7 +517,10 @@ class _ClienteDetalheScreenState extends State<ClienteDetalheScreen>
                     margin: new EdgeInsets.symmetric(
                         horizontal: 2.0, vertical: 6.0),
                     child: Container(
-                        decoration: BoxDecoration(color: kBranco),
+                        decoration: BoxDecoration(
+                          color: kBranco,
+                          borderRadius: BorderRadius.circular(15.00),
+                        ),
                         child: Column(
                           children: <Widget>[
                             Padding(
@@ -913,7 +740,8 @@ class _ClienteDetalheScreenState extends State<ClienteDetalheScreen>
                             ),
                             Divider(),
                             Padding(
-                              padding: const EdgeInsets.all(10.0),
+                              padding:
+                                  const EdgeInsets.fromLTRB(10.0, 2, 10, 2),
                               child: Column(
                                 children: <Widget>[
                                   Row(
@@ -921,7 +749,7 @@ class _ClienteDetalheScreenState extends State<ClienteDetalheScreen>
                                         MainAxisAlignment.spaceBetween,
                                     children: <Widget>[
                                       Text(
-                                        "Total:",
+                                        "Total Aprovado:",
                                         style: TextStyle(
                                           fontSize: 16.0,
                                           color: kVermelhoBase,
@@ -930,7 +758,7 @@ class _ClienteDetalheScreenState extends State<ClienteDetalheScreen>
                                         overflow: TextOverflow.ellipsis,
                                       ),
                                       Text(
-                                        "R\$${formatCurrency.format(pedido[index].valorAFaturar)}",
+                                        "R\$${formatCurrency.format(pedido[index].valorAprovado)}",
                                         style: TextStyle(
                                             fontSize: 14.0,
                                             color: kCinzaEscuro,

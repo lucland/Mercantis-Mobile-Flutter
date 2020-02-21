@@ -62,17 +62,35 @@ class _HomeScreenState extends State<HomeScreen> {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: <Widget>[
-                  CircleAvatar(
-                    child: IconButton(
-                      icon: Icon(
-                        Icons.list,
-                        size: 30,
-                        color: kBranco,
-                      ),
-                      onPressed: () => _scaffoldKey.currentState.openDrawer(),
+                  Container(
+                    decoration: BoxDecoration(
+                      boxShadow: [
+                        BoxShadow(
+                          color: kCinzaSubtitulo,
+                          blurRadius:
+                              2.0, // has the effect of softening the shadow
+                          spreadRadius:
+                              1.00, // has the effect of extending the shadow
+                          offset: Offset(
+                            1.0, // horizontal, move right 10
+                            1.0, // vertical, move down 10
+                          ),
+                        )
+                      ],
+                      shape: BoxShape.circle,
                     ),
-                    backgroundColor: kVermelhoBase,
-                    radius: 30.0,
+                    child: CircleAvatar(
+                      child: IconButton(
+                        icon: Icon(
+                          Icons.list,
+                          size: 30,
+                          color: kBranco,
+                        ),
+                        onPressed: () => _scaffoldKey.currentState.openDrawer(),
+                      ),
+                      backgroundColor: kVermelhoBase,
+                      radius: 30.0,
+                    ),
                   ),
                   Row(
                     children: <Widget>[
@@ -117,17 +135,17 @@ class _HomeScreenState extends State<HomeScreen> {
               decoration: BoxDecoration(
                   boxShadow: [
                     BoxShadow(
-                      color: Color(0xFF252525),
-                      blurRadius: 4.0, // has the effect of softening the shadow
+                      color: kCinzaSubtitulo,
+                      blurRadius: 3.0, // has the effect of softening the shadow
                       spreadRadius:
-                          0.00, // has the effect of extending the shadow
+                          1.00, // has the effect of extending the shadow
                       offset: Offset(
                         0.0, // horizontal, move right 10
                         -1.0, // vertical, move down 10
                       ),
                     )
                   ],
-                  color: Color(0xFFD7DEE0),
+                  color: kCinzaClaroAzulado,
                   borderRadius: BorderRadius.only(
                       topLeft: Radius.circular(30.0),
                       topRight: Radius.circular(30.0))),
@@ -343,7 +361,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     title: Text(
                       'Clientes',
                       style: TextStyle(
-                        fontSize: 20.0,
+                        fontSize: 17.0,
                         color: kCinzaEscuro,
                         fontFamily: 'BebasNeue',
                       ),
@@ -354,41 +372,11 @@ class _HomeScreenState extends State<HomeScreen> {
                   ),
                   Divider(),
                   ListTile(
-                    leading: Icon(Icons.do_not_disturb),
-                    title: Text(
-                      'Vendas Não Liberadas',
-                      style: TextStyle(
-                        fontSize: 20.0,
-                        color: kCinzaEscuro,
-                        fontFamily: 'BebasNeue',
-                      ),
-                    ),
-                    onTap: () {
-                      Navigator.pushNamed(context, '/vendas');
-                    },
-                  ),
-                  Divider(),
-                  ListTile(
-                    leading: Icon(Icons.event_busy),
-                    title: Text(
-                      'Compras Não Autorizadas',
-                      style: TextStyle(
-                        fontSize: 20.0,
-                        color: kCinzaEscuro,
-                        fontFamily: 'BebasNeue',
-                      ),
-                    ),
-                    onTap: () {
-                      Navigator.pushNamed(context, '/compras');
-                    },
-                  ),
-                  Divider(),
-                  ListTile(
                     leading: Icon(Icons.dashboard),
                     title: Text(
                       'Dashboard',
                       style: TextStyle(
-                        fontSize: 20.0,
+                        fontSize: 17.0,
                         color: kCinzaEscuro,
                         fontFamily: 'BebasNeue',
                       ),
@@ -399,13 +387,43 @@ class _HomeScreenState extends State<HomeScreen> {
                   ),
                   Divider(),
                   ListTile(
-                    leading: Icon(Icons.call),
+                    leading: Icon(Icons.assignment_turned_in),
+                    title: Text(
+                      'Liberar Vendas',
+                      style: TextStyle(
+                        fontSize: 17.0,
+                        color: kCinzaEscuro,
+                        fontFamily: 'BebasNeue',
+                      ),
+                    ),
+                    onTap: () {
+                      Navigator.pushNamed(context, '/vendas');
+                    },
+                  ),
+                  Divider(),
+                  ListTile(
+                    leading: Icon(Icons.attach_money),
+                    title: Text(
+                      'Autorizar Compras',
+                      style: TextStyle(
+                        fontSize: 17.0,
+                        color: kCinzaEscuro,
+                        fontFamily: 'BebasNeue',
+                      ),
+                    ),
+                    onTap: () {
+                      Navigator.pushNamed(context, '/compras');
+                    },
+                  ),
+                  Divider(),
+                  ListTile(
+                    leading: Icon(Icons.people_outline),
                     title: Row(
                       children: <Widget>[
                         Text(
                           'Suporte',
                           style: TextStyle(
-                            fontSize: 20.0,
+                            fontSize: 17.0,
                             color: kCinzaEscuro,
                             fontFamily: 'BebasNeue',
                           ),
@@ -444,7 +462,7 @@ class _HomeScreenState extends State<HomeScreen> {
                             'Sair',
                           ),
                           onTap: () {
-                            Navigator.pushNamed(context, '/login');
+                            Navigator.pushNamed(context, '/cnpj');
                           },
                         ),
                         Divider(),
