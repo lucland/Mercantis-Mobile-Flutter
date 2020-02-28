@@ -58,38 +58,109 @@ class _ComprasScreenState extends State<ComprasScreen> {
 
   Widget indicator() {
     return Scaffold(
-      backgroundColor: kCinzaClaroAzulado,
-      appBar: AppBar(
-        iconTheme: IconThemeData(
-          color: kVermelhoGradiente, //change your color here
-        ),
-        elevation: 5.0,
-        backgroundColor: kBranco,
-        title: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: <Widget>[
-            Text(
-              'Carregando...',
-              overflow: TextOverflow.clip,
-              style: TextStyle(
-                fontSize: 25.0,
-                color: kVermelhoBase,
-                fontFamily: 'Oswald',
+      backgroundColor: kBranco,
+      //TODO: Criar botao para ordernar lislta (de forma alfabetica e cronologica)
+      body: Column(
+        children: <Widget>[
+          SafeArea(
+            child: Padding(
+              padding: const EdgeInsets.fromLTRB(10, 10, 10, 10),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: <Widget>[
+                  Container(
+                    decoration: BoxDecoration(
+                      boxShadow: [
+                        BoxShadow(
+                          color: kCinzaSubtitulo,
+                          blurRadius:
+                              2.0, // has the effect of softening the shadow
+                          spreadRadius:
+                              1.00, // has the effect of extending the shadow
+                          offset: Offset(
+                            1.0, // horizontal, move right 10
+                            1.0, // vertical, move down 10
+                          ),
+                        )
+                      ],
+                      shape: BoxShape.circle,
+                    ),
+                    child: CircleAvatar(
+                      child: IconButton(
+                        icon: Icon(
+                          Icons.arrow_back,
+                          size: 30,
+                          color: kBranco,
+                        ),
+                        onPressed: () => Navigator.pop(context),
+                      ),
+                      backgroundColor: kVermelhoBase,
+                      radius: 25.0,
+                    ),
+                  ),
+                  Row(
+                    textBaseline: TextBaseline.ideographic,
+                    crossAxisAlignment: CrossAxisAlignment.baseline,
+                    children: <Widget>[
+                      Text(
+                        "Carregando...",
+                        textAlign: TextAlign.end,
+                        overflow: TextOverflow.clip,
+                        style: TextStyle(
+                          fontSize: 23.0,
+                          fontWeight: FontWeight.w500,
+                          color: kCinzaEscuro,
+                          fontFamily: 'Oswald',
+                        ),
+                      ),
+                      SizedBox(
+                        width: 5,
+                      ),
+                      Image(
+                        image: AssetImage('images/mercantis.png'),
+                        height: 36,
+                        width: 36.0,
+                      ),
+                      SizedBox(
+                        width: 5,
+                      ),
+                    ],
+                  )
+                ],
               ),
             ),
-            Image(
-              image: AssetImage('images/mercantis.png'),
-              height: 36,
-              width: 36.0,
+          ),
+          Expanded(
+            child: Container(
+              decoration: BoxDecoration(
+                  boxShadow: [
+                    BoxShadow(
+                      color: kCinzaSubtitulo,
+                      blurRadius: 3.0, // has the effect of softening the shadow
+                      spreadRadius:
+                          1.00, // has the effect of extending the shadow
+                      offset: Offset(
+                        0.0, // horizontal, move right 10
+                        -1.0, // vertical, move down 10
+                      ),
+                    )
+                  ],
+                  color: kCinzaClaroAzulado,
+                  borderRadius: BorderRadius.only(
+                      topLeft: Radius.circular(30.0),
+                      topRight: Radius.circular(30.0))),
+              child: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Center(
+                  child: SpinKitCubeGrid(
+                    color: Color(0xFFB91D21),
+                    size: 100.0,
+                  ),
+                ),
+              ),
             ),
-          ],
-        ),
-      ),
-      body: Center(
-        child: SpinKitCubeGrid(
-          color: Color(0xFFB91D21),
-          size: 100.0,
-        ),
+          ),
+        ],
       ),
     );
   }
@@ -219,8 +290,8 @@ class _ComprasScreenState extends State<ComprasScreen> {
                   ],
                   color: kCinzaClaroAzulado,
                   borderRadius: BorderRadius.only(
-                      topLeft: Radius.circular(0.0),
-                      topRight: Radius.circular(0.0))),
+                      topLeft: Radius.circular(30.0),
+                      topRight: Radius.circular(30.0))),
               child: Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: Column(

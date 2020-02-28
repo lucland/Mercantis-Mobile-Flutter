@@ -36,6 +36,7 @@ dependencies:
   pretty_dio_logger: ^1.1.0
   mask_text_input_formatter: ^1.0.6
   flutter_conditional_rendering: ^1.1.1
+  page_transition: ^1.1.5
 
 dev_dependencies:
   flutter_test:

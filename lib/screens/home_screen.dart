@@ -2,9 +2,11 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:mercantis_flutter/screens/cliente_screen.dart';
 import 'package:mercantis_flutter/widgets/reusable_card.dart';
 import 'package:mercantis_flutter/widgets/icon_content.dart';
 import 'package:mercantis_flutter/constants.dart';
+import 'package:page_transition/page_transition.dart';
 
 class HomeScreen extends StatefulWidget {
   @override
@@ -160,7 +162,12 @@ class _HomeScreenState extends State<HomeScreen> {
                             child: GestureDetector(
                               //TODO: fazer animação de clique
                               onTap: () {
-                                Navigator.pushNamed(context, '/cliente');
+//                                Navigator.pushNamed(context, '/cliente');
+                                Navigator.push(
+                                    context,
+                                    PageTransition(
+                                        type: PageTransitionType.downToUp,
+                                        child: ClienteScreen()));
                               },
                               child: ReusableCard(
                                 colour1: Color(0xFFFFFFFF),
