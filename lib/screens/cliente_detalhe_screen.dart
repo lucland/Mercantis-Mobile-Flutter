@@ -38,7 +38,7 @@ class _ClienteDetalheScreenState extends State<ClienteDetalheScreen>
   String nome;
   String cnpj;
   String fj;
-  dynamic telefone;
+  String telefone;
   dynamic classificacao;
   dynamic inscricaoEstadual;
   dynamic inscricaoMunicipal;
@@ -224,8 +224,7 @@ class _ClienteDetalheScreenState extends State<ClienteDetalheScreen>
                               texto1: 'CNPJ', texto2: '${cnpj.toString()}'),
                           Divider(),
                           compras_detalhe_widget(
-                              texto1: 'Telefone',
-                              texto2: '${telefone.toString()}'),
+                              texto1: 'Telefone', texto2: telefone),
                           Divider(),
                           compras_detalhe_widget(
                               texto1: 'Setor', texto2: '${dsSetor.toString()}'),
@@ -370,8 +369,7 @@ class _ClienteDetalheScreenState extends State<ClienteDetalheScreen>
                                         Divider(),
                                         compras_detalhe_widget(
                                             texto1: 'Email',
-                                            texto2:
-                                                '${contato[index].email.toString()}'),
+                                            texto2: contato[index].email),
                                         Divider(),
                                         Padding(
                                           padding: const EdgeInsets.all(4.0),
@@ -691,7 +689,7 @@ class _ClienteDetalheScreenState extends State<ClienteDetalheScreen>
                                                       MainAxisAlignment.center,
                                                   children: <Widget>[
                                                     Text(
-                                                      " Sit.Fat.: ",
+                                                      " Atendimento: ",
                                                       style: TextStyle(
                                                         fontSize: 12.0,
                                                         fontWeight:
@@ -819,7 +817,7 @@ class compras_detalhe_widget extends StatelessWidget {
           SizedBox(width: 10),
           Flexible(
             child: Text(
-              texto2,
+              texto2 ?? "-",
               style: TextStyle(
                   fontSize: 18, fontFamily: 'OpenSans', color: kCinzaEscuro),
               overflow: TextOverflow.clip,

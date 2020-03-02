@@ -356,6 +356,10 @@ class _ConsultaVendaScreenState extends State<ConsultaVendaScreen>
                           ),
                           Divider(),
                           compras_detalhe_widget(
+                              texto1: 'Valor Aprovado',
+                              texto2: 'R\$${formatCurrency.format(valorAP)}'),
+                          Divider(),
+                          compras_detalhe_widget(
                               texto1: 'Valor Faturado',
                               texto2:
                                   'R\$${formatCurrency.format(valorFaturado)}'),
@@ -363,10 +367,6 @@ class _ConsultaVendaScreenState extends State<ConsultaVendaScreen>
                           compras_detalhe_widget(
                               texto1: 'Valor a Faturar',
                               texto2: 'R\$${formatCurrency.format(valorAFat)}'),
-                          Divider(),
-                          compras_detalhe_widget(
-                              texto1: 'Valor Aprovado',
-                              texto2: 'R\$${formatCurrency.format(valorAP)}'),
                           Divider(),
                           compras_detalhe_widget(
                               texto1: 'Rentabilidade',
@@ -553,7 +553,7 @@ class _ConsultaVendaScreenState extends State<ConsultaVendaScreen>
                             padding: const EdgeInsets.all(10.0),
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              crossAxisAlignment: CrossAxisAlignment.start,
+                              crossAxisAlignment: CrossAxisAlignment.center,
                               children: <Widget>[
                                 Expanded(
                                   flex: 90,

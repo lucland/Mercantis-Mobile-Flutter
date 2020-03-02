@@ -4,6 +4,7 @@ import 'dart:convert';
 import 'dart:async';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:mercantis_flutter/models/lista_favorito.dart';
+import 'package:mercantis_flutter/screens/vendas_screen.dart';
 import 'package:mercantis_flutter/services/clientes_simple_service.dart';
 import 'package:mercantis_flutter/models/lista_simples.dart';
 import 'cliente_detalhe_screen.dart';
@@ -33,7 +34,7 @@ class Debouncer {
 }
 
 class _ClienteScreenState extends State<ClienteScreen> {
-  // https://jsonplaceholder.typicode.com/users
+  // https://jsonplaceholder.typicode.com/user
 
   final _debouncer = Debouncer(milliseconds: 500);
   bool isLoading;
@@ -141,7 +142,16 @@ class _ClienteScreenState extends State<ClienteScreen> {
                       right: new BorderSide(width: 1.0, color: kCinzaEscuro),
                     ),
                   ),
-                  child: Icon(Icons.person, color: kCinzaEscuro),
+                  child: IconButton(
+                    icon: Icon(
+                      Icons.star_border,
+                      size: 30,
+                      color: Colors.amber,
+                    ),
+                    onPressed: () =>
+                        //TODO: favoritar
+                        Navigator.pushNamed(context, '/dashboard'),
+                  ),
                 ),
                 title: Text(
                   filteredUsers[index].fantasia,
@@ -229,7 +239,16 @@ class _ClienteScreenState extends State<ClienteScreen> {
                               new BorderSide(width: 1.0, color: kCinzaEscuro),
                         ),
                       ),
-                      child: Icon(Icons.star, color: kCinzaEscuro),
+                      child: IconButton(
+                        icon: Icon(
+                          Icons.star,
+                          size: 30,
+                          color: Colors.amber,
+                        ),
+                        onPressed: () =>
+                            //TODO: favoritar
+                            Navigator.pushNamed(context, '/dashboard'),
+                      ),
                     ),
                     title: Text(
                       favoritos[index].fantasia,
