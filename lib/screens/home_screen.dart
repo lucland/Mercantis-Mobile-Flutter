@@ -2,7 +2,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:mercantis_flutter/screens/cliente_screen.dart';
 import 'package:mercantis_flutter/widgets/reusable_card.dart';
 import 'package:mercantis_flutter/widgets/icon_content.dart';
 import 'package:mercantis_flutter/constants.dart';
@@ -163,11 +162,7 @@ class _HomeScreenState extends State<HomeScreen> {
                               //TODO: fazer animação de clique
                               onTap: () {
 //                                Navigator.pushNamed(context, '/cliente');
-                                Navigator.push(
-                                    context,
-                                    PageTransition(
-                                        type: PageTransitionType.downToUp,
-                                        child: ClienteScreen()));
+                                Navigator.pushNamed(context, '/cliente');
                               },
                               child: ReusableCard(
                                 colour1: Color(0xFFFFFFFF),
