@@ -545,54 +545,120 @@ class _ConsultaVendaScreenState extends State<ConsultaVendaScreen>
                       mainAxisAlignment: MainAxisAlignment.center,
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: <Widget>[
-                        Padding(
-                          padding: const EdgeInsets.all(10.0),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: <Widget>[
-                              Expanded(
-                                flex: 90,
-                                child: Column(
-                                  children: <Widget>[
-                                    Text(
-                                      "${itens[index].dsMaterial}",
-                                      style: TextStyle(
-                                          fontSize: 18,
-                                          fontFamily: 'OpenSans',
-                                          color: Colors.black,
-                                          fontWeight: FontWeight.w500),
-                                      textAlign: TextAlign.center,
-                                      overflow: TextOverflow.clip,
-                                    ),
-                                  ],
-                                ),
-                              ),
-                              Expanded(
-                                flex: 10,
-                                child: Column(
-                                  mainAxisAlignment: MainAxisAlignment.start,
-                                  children: <Widget>[
-                                    CircleAvatar(
-                                      child: Text(
-                                        "${itens[index].item.toString()}",
+                        Conditional.single(
+                          context: context,
+                          conditionBuilder: (BuildContext context) =>
+                              itens[index].saldo != 0,
+                          widgetBuilder: (BuildContext context) => Padding(
+                            padding: const EdgeInsets.all(10.0),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: <Widget>[
+                                Expanded(
+                                  flex: 90,
+                                  child: Column(
+                                    children: <Widget>[
+                                      Text(
+                                        "${itens[index].dsMaterial}",
                                         style: TextStyle(
-                                            fontSize: 15,
+                                            fontSize: 18,
                                             fontFamily: 'OpenSans',
-                                            color: kBranco,
-                                            fontWeight: FontWeight.w400),
-                                        textAlign: TextAlign.end,
+                                            color: Colors.black,
+                                            fontWeight: FontWeight.w500),
+                                        textAlign: TextAlign.center,
                                         overflow: TextOverflow.clip,
                                       ),
-                                      backgroundColor: kVermelhoBase,
-                                      radius: 12.0,
-                                    ),
-                                  ],
+                                    ],
+                                  ),
                                 ),
-                              ),
-                            ],
+                                Expanded(
+                                  flex: 10,
+                                  child: Column(
+                                    mainAxisAlignment: MainAxisAlignment.start,
+                                    children: <Widget>[
+                                      CircleAvatar(
+                                        child: Text(
+                                          "${itens[index].item.toString()}",
+                                          style: TextStyle(
+                                              fontSize: 15,
+                                              fontFamily: 'OpenSans',
+                                              color: kBranco,
+                                              fontWeight: FontWeight.w400),
+                                          textAlign: TextAlign.end,
+                                          overflow: TextOverflow.clip,
+                                        ),
+                                        backgroundColor: kVermelhoBase,
+                                        radius: 12.0,
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                          fallbackBuilder: (BuildContext context) => Padding(
+                            padding: const EdgeInsets.all(10.0),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: <Widget>[
+                                Expanded(
+                                  flex: 10,
+                                  child: Column(
+                                    mainAxisAlignment: MainAxisAlignment.start,
+                                    children: <Widget>[
+                                      CircleAvatar(
+                                        child: Text(
+                                          "${itens[index].item.toString()}",
+                                          style: TextStyle(
+                                              fontSize: 15,
+                                              fontFamily: 'OpenSans',
+                                              color: kBranco,
+                                              fontWeight: FontWeight.w400),
+                                          textAlign: TextAlign.end,
+                                          overflow: TextOverflow.clip,
+                                        ),
+                                        backgroundColor: kVermelhoBase,
+                                        radius: 12.0,
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                                Expanded(
+                                  flex: 80,
+                                  child: Column(
+                                    children: <Widget>[
+                                      Text(
+                                        "${itens[index].dsMaterial}",
+                                        style: TextStyle(
+                                            fontSize: 18,
+                                            fontFamily: 'OpenSans',
+                                            color: Colors.black,
+                                            fontWeight: FontWeight.w500),
+                                        textAlign: TextAlign.center,
+                                        overflow: TextOverflow.clip,
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                                Expanded(
+                                  flex: 10,
+                                  child: Column(
+                                    children: <Widget>[
+                                      Icon(
+                                        Icons.check,
+                                        color: Colors.lightGreen,
+                                        size: 35,
+                                      )
+                                    ],
+                                  ),
+                                ),
+                              ],
+                            ),
                           ),
                         ),
+
                         Divider(),
                         compras_detalhe_widget(
                             texto1: 'Unidade',
@@ -607,21 +673,38 @@ class _ConsultaVendaScreenState extends State<ConsultaVendaScreen>
                             texto1: 'Preço Unitário',
                             texto2:
                                 'R\$${formatCurrency.format(itens[index].precoUnitario)}'),
-                        Divider(),
-                        compras_detalhe_widget(
-                            texto1: 'Total',
-                            texto2:
-                                'R\$${formatCurrency.format(itens[index].precoTotal)}'),
-                        Divider(),
+                        Conditional.single(
+                          context: context,
+                          conditionBuilder: (BuildContext context) =>
+                              itens[index].saldo != 0,
+                          widgetBuilder: (BuildContext context) => Divider(),
+                          fallbackBuilder: (BuildContext context) => SizedBox(
+                            height: 0,
+                          ),
+                        ),
+                        Conditional.single(
+                          context: context,
+                          conditionBuilder: (BuildContext context) =>
+                              itens[index].saldo != 0,
+                          widgetBuilder: (BuildContext context) =>
+                              compras_detalhe_widget(
+                                  texto1: 'Saldo a Entregar',
+                                  texto2:
+                                      'R\$${formatCurrency.format(itens[index].saldo)}'),
+                          fallbackBuilder: (BuildContext context) => SizedBox(
+                            height: 0,
+                          ),
+                        ),
+//                        Divider(),
 //                        compras_detalhe_widget(
 //                            texto1: 'Rentabilidade',
 //                            texto2:
 //                                'R${formatCurrency.format(itens[index].rentabilidade)}'),
 //                        Divider(),
-                        compras_detalhe_widget(
-                            texto1: 'Rentabilidade %',
-                            texto2:
-                                '${itens[index].percRentabilidade.toStringAsFixed(3)}%'),
+//                        compras_detalhe_widget(
+//                            texto1: 'Rentabilidade %',
+//                            texto2:
+//                                '${itens[index].percRentabilidade.toStringAsFixed(3)}%'),
                         SizedBox(
                           height: 10,
                         ),
