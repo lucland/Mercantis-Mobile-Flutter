@@ -33,6 +33,7 @@ class _ClienteDetalheScreenState extends State<ClienteDetalheScreen>
   List<Endereco> endereco = List<Endereco>();
   List<Contato> contato = List<Contato>();
   List<Pedido> pedido = List<Pedido>();
+  List<ResumoCr> resumo = List<ResumoCr>();
   String fantasia;
   String status;
   String nome;
@@ -57,7 +58,7 @@ class _ClienteDetalheScreenState extends State<ClienteDetalheScreen>
   @override
   void initState() {
     isLoading = true;
-    _tabController = new TabController(length: 2, vsync: this);
+    _tabController = new TabController(length: 3, vsync: this);
     super.initState();
     cod = widget.codCliente;
     Services.getCliente(cod).then((usersFromServer) {
@@ -67,6 +68,7 @@ class _ClienteDetalheScreenState extends State<ClienteDetalheScreen>
         endereco = usersFromServer.enderecos;
         contato = usersFromServer.contatos;
         pedido = usersFromServer.pedidos;
+        resumo = usersFromServer.resumoCr;
 
         nome = usersFromServer.nome;
         fantasia = usersFromServer.fantasia;
@@ -176,6 +178,10 @@ class _ClienteDetalheScreenState extends State<ClienteDetalheScreen>
               icon: new Icon(Icons.local_grocery_store),
               text: "Pedidos",
             ),
+            Tab(
+              icon: new Icon(Icons.library_books),
+              text: "CR",
+            ),
           ],
           controller: _tabController,
           indicatorColor: kVermelhoBase,
@@ -187,6 +193,7 @@ class _ClienteDetalheScreenState extends State<ClienteDetalheScreen>
         children: [
           BodyWidget(),
           produt(),
+          cr(),
         ],
         controller: _tabController,
       ),
@@ -774,6 +781,115 @@ class _ClienteDetalheScreenState extends State<ClienteDetalheScreen>
                             ),
                           ],
                         )),
+                  ),
+                );
+              },
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget cr() {
+    return Scaffold(
+      backgroundColor: kCinzaClaroAzulado,
+      body: Column(
+        children: <Widget>[
+          Expanded(
+            child: ListView.builder(
+              padding: EdgeInsets.all(5.0),
+              itemCount: resumo == null ? 0 : resumo.length,
+              itemBuilder: (BuildContext context, int index) {
+                //return makeCard;
+                return Container(
+                  width: 500,
+                  child: Card(
+                    elevation: 8.0,
+                    margin: new EdgeInsets.symmetric(
+                        horizontal: 5.0, vertical: 5.0),
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: <Widget>[
+                        SizedBox(
+                          height: 10,
+                        ),
+                        compras_detalhe_widget(
+                            texto1: 'Total Vencido',
+                            texto2:
+                                '${resumo[index].crTotalVencidoQtde.toString()}'),
+                        Divider(),
+                        compras_detalhe_widget(
+                            texto1: 'Total Vencido Valor',
+                            texto2:
+                                'R\$${formatCurrency.format(resumo[index].crTotalVencidoValor)}'),
+                        Divider(),
+                        compras_detalhe_widget(
+                            texto1: 'Mais Antigo',
+                            texto2:
+                                '${DateFormat("dd/MM/yyyy").format(DateTime.parse(resumo[index].crTotalVencidoMaisAntigo.toString().substring(0, 10)))}'),
+                        Divider(),
+                        compras_detalhe_widget(
+                            texto1: 'Total a Vencer',
+                            texto2:
+                                '${resumo[index].crTotalAvencerQtde.toString()}'),
+                        Divider(),
+                        compras_detalhe_widget(
+                            texto1: 'Total a Vencer Valor',
+                            texto2:
+                                'R\$${formatCurrency.format(resumo[index].crTotalAvencerValor)}'),
+                        Divider(),
+                        compras_detalhe_widget(
+                            texto1: 'Útimo T. a Vencer',
+                            texto2:
+                                '${DateFormat("dd/MM/yyyy").format(DateTime.parse(resumo[index].crTotalAvencerUltimo.toString().substring(0, 10)))}'),
+                        Divider(),
+                        compras_detalhe_widget(
+                            texto1: 'Total',
+                            texto2:
+                                'R\$${formatCurrency.format(resumo[index].crTotalValor)}'),
+                        Divider(),
+                        Padding(
+                          padding: const EdgeInsets.all(5.0),
+                          child: Material(
+                            elevation: 5.0,
+                            borderRadius: BorderRadius.circular(0.0),
+                            color: kVermelhoBase,
+                            child: MaterialButton(
+                              height: 20,
+                              minWidth: MediaQuery.of(context).size.width,
+                              padding:
+                                  EdgeInsets.fromLTRB(10.0, 10.0, 10.0, 10.0),
+                              onPressed: () {},
+                              child: InkWell(
+                                  child: new Text('Lista CR',
+                                      textAlign: TextAlign.center,
+                                      style: TextStyle(
+                                              fontFamily: 'BebasNeue',
+                                              fontSize: 20.0)
+                                          .copyWith(
+                                              color: Colors.white,
+                                              fontWeight: FontWeight.bold)),
+                                  onTap: () => Navigator.push(context,
+                                          MaterialPageRoute(builder: (context) {
+                                        return ConsultaVendaScreen(
+                                          pedido: resumo[index].esCodigo,
+                                        );
+                                      }))),
+                            ),
+                          ),
+                        ),
+//                          Divider(),
+//                          compras_detalhe_widget(
+//                              texto1: 'Rentabilidade',
+//                              texto2:
+//                                  '${DateFormat("dd/MM/yyyy").format(DateTime.parse(data.toString().substring(0, 10)))}'),
+                        SizedBox(
+                          height: 10,
+                        ),
+                      ],
+                    ),
                   ),
                 );
               },

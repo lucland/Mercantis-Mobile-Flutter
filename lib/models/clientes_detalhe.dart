@@ -87,27 +87,27 @@ class Info {
 }
 
 class Cliente {
-  final dynamic cliente;
+  final int cliente;
   final String status;
   final String nome;
   final String fantasia;
   final String cnpj;
-  final String telefone;
+  final dynamic telefone;
   final String fj;
-  final dynamic classificacao;
-  final dynamic inscricaoEstadual;
+  final int classificacao;
+  final String inscricaoEstadual;
   final dynamic inscricaoMunicipal;
   final DateTime dtCadastro;
   final DateTime dtAtualizacao;
-  final dynamic tipo;
-  final dynamic setor;
+  final int tipo;
+  final int setor;
   final String dsSetor;
   final dynamic cnpjOk;
   final String tipoCliente;
-  final dynamic indicadorIe;
+  final int indicadorIe;
+  final List<ResumoCr> resumoCr;
   final List<Endereco> enderecos;
   final List<Contato> contatos;
-  final List<dynamic> recebimentos;
   final List<Pedido> pedidos;
 
   Cliente({
@@ -129,9 +129,9 @@ class Cliente {
     this.cnpjOk,
     this.tipoCliente,
     this.indicadorIe,
+    this.resumoCr,
     this.enderecos,
     this.contatos,
-    this.recebimentos,
     this.pedidos,
   });
 
@@ -141,10 +141,10 @@ class Cliente {
     String nome,
     String fantasia,
     String cnpj,
-    String telefone,
+    dynamic telefone,
     String fj,
     int classificacao,
-    dynamic inscricaoEstadual,
+    String inscricaoEstadual,
     dynamic inscricaoMunicipal,
     DateTime dtCadastro,
     DateTime dtAtualizacao,
@@ -154,9 +154,9 @@ class Cliente {
     dynamic cnpjOk,
     String tipoCliente,
     int indicadorIe,
+    List<ResumoCr> resumoCr,
     List<Endereco> enderecos,
     List<Contato> contatos,
-    List<dynamic> recebimentos,
     List<Pedido> pedidos,
   }) =>
       Cliente(
@@ -178,9 +178,9 @@ class Cliente {
         cnpjOk: cnpjOk ?? this.cnpjOk,
         tipoCliente: tipoCliente ?? this.tipoCliente,
         indicadorIe: indicadorIe ?? this.indicadorIe,
+        resumoCr: resumoCr ?? this.resumoCr,
         enderecos: enderecos ?? this.enderecos,
         contatos: contatos ?? this.contatos,
-        recebimentos: recebimentos ?? this.recebimentos,
         pedidos: pedidos ?? this.pedidos,
       );
 
@@ -194,11 +194,13 @@ class Cliente {
         nome: json["Nome"] == null ? null : json["Nome"],
         fantasia: json["Fantasia"] == null ? null : json["Fantasia"],
         cnpj: json["CNPJ"] == null ? null : json["CNPJ"],
-        telefone: json["Telefone"] == null ? null : json["Telefone"],
+        telefone: json["Telefone"],
         fj: json["FJ"] == null ? null : json["FJ"],
         classificacao:
             json["Classificacao"] == null ? null : json["Classificacao"],
-        inscricaoEstadual: json["InscricaoEstadual"],
+        inscricaoEstadual: json["InscricaoEstadual"] == null
+            ? null
+            : json["InscricaoEstadual"],
         inscricaoMunicipal: json["InscricaoMunicipal"],
         dtCadastro: json["DtCadastro"] == null
             ? null
@@ -212,6 +214,10 @@ class Cliente {
         cnpjOk: json["CNPJ_Ok"],
         tipoCliente: json["TipoCliente"] == null ? null : json["TipoCliente"],
         indicadorIe: json["IndicadorIE"] == null ? null : json["IndicadorIE"],
+        resumoCr: json["ResumoCR"] == null
+            ? null
+            : List<ResumoCr>.from(
+                json["ResumoCR"].map((x) => ResumoCr.fromMap(x))),
         enderecos: json["Enderecos"] == null
             ? null
             : List<Endereco>.from(
@@ -220,9 +226,6 @@ class Cliente {
             ? null
             : List<Contato>.from(
                 json["Contatos"].map((x) => Contato.fromMap(x))),
-        recebimentos: json["Recebimentos"] == null
-            ? null
-            : List<dynamic>.from(json["Recebimentos"].map((x) => x)),
         pedidos: json["Pedidos"] == null
             ? null
             : List<Pedido>.from(json["Pedidos"].map((x) => Pedido.fromMap(x))),
@@ -234,10 +237,11 @@ class Cliente {
         "Nome": nome == null ? null : nome,
         "Fantasia": fantasia == null ? null : fantasia,
         "CNPJ": cnpj == null ? null : cnpj,
-        "Telefone": telefone == null ? null : telefone,
+        "Telefone": telefone,
         "FJ": fj == null ? null : fj,
         "Classificacao": classificacao == null ? null : classificacao,
-        "InscricaoEstadual": inscricaoEstadual,
+        "InscricaoEstadual":
+            inscricaoEstadual == null ? null : inscricaoEstadual,
         "InscricaoMunicipal": inscricaoMunicipal,
         "DtCadastro": dtCadastro == null ? null : dtCadastro.toIso8601String(),
         "DtAtualizacao":
@@ -248,15 +252,15 @@ class Cliente {
         "CNPJ_Ok": cnpjOk,
         "TipoCliente": tipoCliente == null ? null : tipoCliente,
         "IndicadorIE": indicadorIe == null ? null : indicadorIe,
+        "ResumoCR": resumoCr == null
+            ? null
+            : List<dynamic>.from(resumoCr.map((x) => x.toMap())),
         "Enderecos": enderecos == null
             ? null
             : List<dynamic>.from(enderecos.map((x) => x.toMap())),
         "Contatos": contatos == null
             ? null
             : List<dynamic>.from(contatos.map((x) => x.toMap())),
-        "Recebimentos": recebimentos == null
-            ? null
-            : List<dynamic>.from(recebimentos.map((x) => x)),
         "Pedidos": pedidos == null
             ? null
             : List<dynamic>.from(pedidos.map((x) => x.toMap())),
@@ -267,13 +271,13 @@ class Contato {
   final int contato;
   final String nome;
   final String cargo;
-  final dynamic dtNascimento;
-  final dynamic dsTel1;
+  final DateTime dtNascimento;
+  final String dsTel1;
   final String prefixo1;
   final String numero1;
-  final dynamic dsTel2;
+  final String dsTel2;
   final String prefixo2;
-  final String dsTipoEmail;
+  final dynamic dsTipoEmail;
   final String email;
   final dynamic obervacao;
 
@@ -296,13 +300,13 @@ class Contato {
     int contato,
     String nome,
     String cargo,
-    dynamic dtNascimento,
-    dynamic dsTel1,
+    DateTime dtNascimento,
+    String dsTel1,
     String prefixo1,
     String numero1,
-    dynamic dsTel2,
+    String dsTel2,
     String prefixo2,
-    String dsTipoEmail,
+    dynamic dsTipoEmail,
     String email,
     dynamic obervacao,
   }) =>
@@ -329,13 +333,15 @@ class Contato {
         contato: json["Contato"] == null ? null : json["Contato"],
         nome: json["Nome"] == null ? null : json["Nome"],
         cargo: json["Cargo"] == null ? null : json["Cargo"],
-        dtNascimento: json["DtNascimento"],
-        dsTel1: json["Ds_Tel1"],
+        dtNascimento: json["DtNascimento"] == null
+            ? null
+            : DateTime.parse(json["DtNascimento"]),
+        dsTel1: json["Ds_Tel1"] == null ? null : json["Ds_Tel1"],
         prefixo1: json["Prefixo1"] == null ? null : json["Prefixo1"],
         numero1: json["Numero1"] == null ? null : json["Numero1"],
-        dsTel2: json["Ds_Tel2"],
+        dsTel2: json["Ds_Tel2"] == null ? null : json["Ds_Tel2"],
         prefixo2: json["Prefixo2"] == null ? null : json["Prefixo2"],
-        dsTipoEmail: json["Ds_TipoEmail"] == null ? null : json["Ds_TipoEmail"],
+        dsTipoEmail: json["Ds_TipoEmail"],
         email: json["Email"] == null ? null : json["Email"],
         obervacao: json["Obervacao"],
       );
@@ -344,13 +350,14 @@ class Contato {
         "Contato": contato == null ? null : contato,
         "Nome": nome == null ? null : nome,
         "Cargo": cargo == null ? null : cargo,
-        "DtNascimento": dtNascimento,
-        "Ds_Tel1": dsTel1,
+        "DtNascimento":
+            dtNascimento == null ? null : dtNascimento.toIso8601String(),
+        "Ds_Tel1": dsTel1 == null ? null : dsTel1,
         "Prefixo1": prefixo1 == null ? null : prefixo1,
         "Numero1": numero1 == null ? null : numero1,
-        "Ds_Tel2": dsTel2,
+        "Ds_Tel2": dsTel2 == null ? null : dsTel2,
         "Prefixo2": prefixo2 == null ? null : prefixo2,
-        "Ds_TipoEmail": dsTipoEmail == null ? null : dsTipoEmail,
+        "Ds_TipoEmail": dsTipoEmail,
         "Email": email == null ? null : email,
         "Obervacao": obervacao,
       };
@@ -364,7 +371,7 @@ class Endereco {
   final String estado;
   final String cep;
   final String numero;
-  final String complemento;
+  final dynamic complemento;
   final int codTipoEnd;
 
   Endereco({
@@ -387,7 +394,7 @@ class Endereco {
     String estado,
     String cep,
     String numero,
-    String complemento,
+    dynamic complemento,
     int codTipoEnd,
   }) =>
       Endereco(
@@ -415,7 +422,7 @@ class Endereco {
         estado: json["Estado"] == null ? null : json["Estado"],
         cep: json["CEP"] == null ? null : json["CEP"],
         numero: json["Numero"] == null ? null : json["Numero"],
-        complemento: json["Complemento"] == null ? null : json["Complemento"],
+        complemento: json["Complemento"],
         codTipoEnd: json["Cod_Tipo_End"] == null ? null : json["Cod_Tipo_End"],
       );
 
@@ -427,7 +434,7 @@ class Endereco {
         "Estado": estado == null ? null : estado,
         "CEP": cep == null ? null : cep,
         "Numero": numero == null ? null : numero,
-        "Complemento": complemento == null ? null : complemento,
+        "Complemento": complemento,
         "Cod_Tipo_End": codTipoEnd == null ? null : codTipoEnd,
       };
 }
@@ -441,6 +448,8 @@ class Pedido {
   final String fantasia;
   final String situacaofat;
   final String situacao;
+  final String tipoDoc;
+  final String codTipoDoc;
   final double valorAFaturar;
   final double valorAprovado;
 
@@ -453,6 +462,8 @@ class Pedido {
     this.fantasia,
     this.situacaofat,
     this.situacao,
+    this.tipoDoc,
+    this.codTipoDoc,
     this.valorAFaturar,
     this.valorAprovado,
   });
@@ -466,6 +477,8 @@ class Pedido {
     String fantasia,
     String situacaofat,
     String situacao,
+    String tipoDoc,
+    String codTipoDoc,
     double valorAFaturar,
     double valorAprovado,
   }) =>
@@ -478,6 +491,8 @@ class Pedido {
         fantasia: fantasia ?? this.fantasia,
         situacaofat: situacaofat ?? this.situacaofat,
         situacao: situacao ?? this.situacao,
+        tipoDoc: tipoDoc ?? this.tipoDoc,
+        codTipoDoc: codTipoDoc ?? this.codTipoDoc,
         valorAFaturar: valorAFaturar ?? this.valorAFaturar,
         valorAprovado: valorAprovado ?? this.valorAprovado,
       );
@@ -495,6 +510,8 @@ class Pedido {
         fantasia: json["fantasia"] == null ? null : json["fantasia"],
         situacaofat: json["situacaofat"] == null ? null : json["situacaofat"],
         situacao: json["situacao"] == null ? null : json["situacao"],
+        tipoDoc: json["tipo_doc"] == null ? null : json["tipo_doc"],
+        codTipoDoc: json["cod_tipo_doc"] == null ? null : json["cod_tipo_doc"],
         valorAFaturar: json["valorAFaturar"] == null
             ? null
             : json["valorAFaturar"].toDouble(),
@@ -512,7 +529,101 @@ class Pedido {
         "fantasia": fantasia == null ? null : fantasia,
         "situacaofat": situacaofat == null ? null : situacaofat,
         "situacao": situacao == null ? null : situacao,
+        "tipo_doc": tipoDoc == null ? null : tipoDoc,
+        "cod_tipo_doc": codTipoDoc == null ? null : codTipoDoc,
         "valorAFaturar": valorAFaturar == null ? null : valorAFaturar,
         "valorAprovado": valorAprovado == null ? null : valorAprovado,
+      };
+}
+
+class ResumoCr {
+  final int esCodigo;
+  final int crTotalVencidoQtde;
+  final double crTotalVencidoValor;
+  final DateTime crTotalVencidoMaisAntigo;
+  final int crTotalAvencerQtde;
+  final double crTotalAvencerValor;
+  final DateTime crTotalAvencerUltimo;
+  final double crTotalValor;
+
+  ResumoCr({
+    this.esCodigo,
+    this.crTotalVencidoQtde,
+    this.crTotalVencidoValor,
+    this.crTotalVencidoMaisAntigo,
+    this.crTotalAvencerQtde,
+    this.crTotalAvencerValor,
+    this.crTotalAvencerUltimo,
+    this.crTotalValor,
+  });
+
+  ResumoCr copyWith({
+    int esCodigo,
+    int crTotalVencidoQtde,
+    double crTotalVencidoValor,
+    DateTime crTotalVencidoMaisAntigo,
+    int crTotalAvencerQtde,
+    double crTotalAvencerValor,
+    DateTime crTotalAvencerUltimo,
+    double crTotalValor,
+  }) =>
+      ResumoCr(
+        esCodigo: esCodigo ?? this.esCodigo,
+        crTotalVencidoQtde: crTotalVencidoQtde ?? this.crTotalVencidoQtde,
+        crTotalVencidoValor: crTotalVencidoValor ?? this.crTotalVencidoValor,
+        crTotalVencidoMaisAntigo:
+            crTotalVencidoMaisAntigo ?? this.crTotalVencidoMaisAntigo,
+        crTotalAvencerQtde: crTotalAvencerQtde ?? this.crTotalAvencerQtde,
+        crTotalAvencerValor: crTotalAvencerValor ?? this.crTotalAvencerValor,
+        crTotalAvencerUltimo: crTotalAvencerUltimo ?? this.crTotalAvencerUltimo,
+        crTotalValor: crTotalValor ?? this.crTotalValor,
+      );
+
+  factory ResumoCr.fromJson(String str) => ResumoCr.fromMap(json.decode(str));
+
+  String toJson() => json.encode(toMap());
+
+  factory ResumoCr.fromMap(Map<String, dynamic> json) => ResumoCr(
+        esCodigo: json["es_codigo"] == null ? null : json["es_codigo"],
+        crTotalVencidoQtde: json["cr_total_vencido_qtde"] == null
+            ? null
+            : json["cr_total_vencido_qtde"],
+        crTotalVencidoValor: json["cr_total_vencido_valor"] == null
+            ? null
+            : json["cr_total_vencido_valor"].toDouble(),
+        crTotalVencidoMaisAntigo: json["cr_total_vencido_mais_antigo"] == null
+            ? null
+            : DateTime.parse(json["cr_total_vencido_mais_antigo"]),
+        crTotalAvencerQtde: json["cr_total_avencer_qtde"] == null
+            ? null
+            : json["cr_total_avencer_qtde"],
+        crTotalAvencerValor: json["cr_total_avencer_valor"] == null
+            ? null
+            : json["cr_total_avencer_valor"].toDouble(),
+        crTotalAvencerUltimo: json["cr_total_avencer_ultimo"] == null
+            ? null
+            : DateTime.parse(json["cr_total_avencer_ultimo"]),
+        crTotalValor: json["cr_total_valor"] == null
+            ? null
+            : json["cr_total_valor"].toDouble(),
+      );
+
+  Map<String, dynamic> toMap() => {
+        "es_codigo": esCodigo == null ? null : esCodigo,
+        "cr_total_vencido_qtde":
+            crTotalVencidoQtde == null ? null : crTotalVencidoQtde,
+        "cr_total_vencido_valor":
+            crTotalVencidoValor == null ? null : crTotalVencidoValor,
+        "cr_total_vencido_mais_antigo": crTotalVencidoMaisAntigo == null
+            ? null
+            : crTotalVencidoMaisAntigo.toIso8601String(),
+        "cr_total_avencer_qtde":
+            crTotalAvencerQtde == null ? null : crTotalAvencerQtde,
+        "cr_total_avencer_valor":
+            crTotalAvencerValor == null ? null : crTotalAvencerValor,
+        "cr_total_avencer_ultimo": crTotalAvencerUltimo == null
+            ? null
+            : crTotalAvencerUltimo.toIso8601String(),
+        "cr_total_valor": crTotalValor == null ? null : crTotalValor,
       };
 }
